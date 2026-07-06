@@ -1,9 +1,83 @@
 @import "tailwindcss";
 
-:root {
-  color-scheme: light dark;
+@theme {
+  --font-sans: "Jost", "Century Gothic", "Futura", system-ui, sans-serif;
+  --color-ink: #131316;
+  --color-ink-soft: #1b1b20;
+  --color-fog: #9b98a3;
+  --color-accent: #8674f5;
+  --color-star: #5975ff;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  background-color: var(--color-ink);
+  color: #f4f3f7;
+  font-family: var(--font-sans);
+}
+
+/* Точечная сетка на фоне всей страницы */
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.5px, transparent 1.5px);
+  background-size: 104px 104px;
+  background-position: 52px 52px;
+}
+
+/* Мягкое свечение сверху за хиро-текстом */
+.top-glow {
+  background: radial-gradient(
+    ellipse 60% 45% at 50% 0%,
+    rgba(134, 116, 245, 0.14),
+    rgba(134, 116, 245, 0.05) 55%,
+    transparent 100%
+  );
+}
+
+/* Пункт навигации: светящаяся полоска-подчёркивание при наведении */
+.nav-link {
+  position: relative;
+  padding-bottom: 6px;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  translate: -50% 0;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(134, 116, 245, 0.9),
+    transparent
+  );
+  box-shadow: 0 0 12px 2px rgba(134, 116, 245, 0.55);
+  transition: width 0.35s ease;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* На устройствах без ховера декор хиро показан всегда */
+@media (hover: none) {
+  .hero-decor {
+    opacity: 1 !important;
+  }
+  .hero-decor > * {
+    opacity: 1 !important;
+    scale: 1 !important;
+  }
 }
