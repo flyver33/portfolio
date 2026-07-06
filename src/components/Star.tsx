@@ -1,12 +1,16 @@
+import type { CSSProperties } from 'react'
+
 type StarProps = {
   className?: string
+  style?: CSSProperties
 }
 
 /* Четырёхлучевая звёздочка из макета (assets/hero/Star_1.svg) */
-function Star({ className }: StarProps) {
+function Star({ className, style }: StarProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

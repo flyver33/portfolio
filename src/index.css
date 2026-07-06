@@ -1,12 +1,23 @@
 @import "tailwindcss";
 
+/* Токены из .claude/memory/design-system.md */
 @theme {
-  --font-sans: "Jost", "Century Gothic", "Futura", system-ui, sans-serif;
-  --color-ink: #131316;
-  --color-ink-soft: #1b1b20;
-  --color-fog: #9b98a3;
-  --color-accent: #8674f5;
-  --color-star: #5975ff;
+  --font-sans: "Golos Text", system-ui, sans-serif;
+  --font-display: "Unbounded", system-ui, sans-serif;
+
+  --color-bg: #191919;
+  --color-elevated: #212121;
+  --color-line: #2e2e2e;
+  --color-fog: #969696;
+  --color-mute: #6e6e6e;
+  --color-accent: #778bff;
+  --color-accent-hover: #8d9eff;
+  --color-accent-press: #6373e6;
+
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(119, 139, 255, 0.15);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html {
@@ -15,33 +26,34 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--color-ink);
-  color: #f4f3f7;
+  background-color: var(--color-bg);
+  color: #ffffff;
   font-family: var(--font-sans);
 }
 
-/* Точечная сетка на фоне всей страницы */
+/* --- Атмосфера hero (только hero: dot-grid + свечение, см. дизайн-систему §6) --- */
+
 .dot-grid {
   background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.5px, transparent 1.5px);
   background-size: 104px 104px;
   background-position: 52px 52px;
 }
 
-/* Мягкое свечение сверху за хиро-текстом */
 .top-glow {
   background: radial-gradient(
     ellipse 60% 45% at 50% 0%,
-    rgba(134, 116, 245, 0.14),
-    rgba(134, 116, 245, 0.05) 55%,
+    rgba(119, 139, 255, 0.16),
+    rgba(119, 139, 255, 0.05) 55%,
     transparent 100%
   );
 }
 
-/* Пункт навигации: светящаяся полоска-подчёркивание при наведении */
+/* --- Навигация: светящееся подчёркивание --- */
+
 .nav-link {
   position: relative;
   padding-bottom: 6px;
-  transition: color 0.3s ease;
+  transition: color 150ms ease;
 }
 
 .nav-link::after {
@@ -53,14 +65,9 @@ body {
   width: 0;
   translate: -50% 0;
   border-radius: 9999px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(134, 116, 245, 0.9),
-    transparent
-  );
-  box-shadow: 0 0 12px 2px rgba(134, 116, 245, 0.55);
-  transition: width 0.35s ease;
+  background: linear-gradient(90deg, transparent, rgba(119, 139, 255, 0.9), transparent);
+  box-shadow: 0 0 12px 2px rgba(119, 139, 255, 0.55);
+  transition: width 300ms var(--ease-out-expo);
 }
 
 .nav-link:hover {
@@ -71,13 +78,102 @@ body {
   width: 100%;
 }
 
-/* На устройствах без ховера декор хиро показан всегда */
+/* --- Конфетти в hero: элементы вылетают из центра к своим местам ---
+   Каждый элемент задаёт --fx/--fy (вектор от финальной позиции к центру),
+   --rot (финальный поворот) и --d (задержку). */
+
+.confetti {
+  opacity: 0;
+  transform: translate(var(--fx, 0px), var(--fy, 0px)) rotate(calc(var(--rot, 0deg) + 70deg))
+    scale(0.15);
+  transition:
+    transform 650ms cubic-bezier(0.18, 0.89, 0.32, 1.28),
+    opacity 300ms ease-out;
+  transition-delay: var(--d, 0ms);
+}
+
+.revealed .confetti {
+  opacity: 1;
+  transform: translate(0px, 0px) rotate(var(--rot, 0deg)) scale(1);
+}
+
+/* На устройствах без ховера декор виден всегда */
 @media (hover: none) {
-  .hero-decor {
-    opacity: 1 !important;
+  .confetti {
+    opacity: 1;
+    transform: translate(0px, 0px) rotate(var(--rot, 0deg)) scale(1);
   }
-  .hero-decor > * {
-    opacity: 1 !important;
-    scale: 1 !important;
+}
+
+/* --- Построчное появление заголовка «Обо мне» (маска-прямоугольник) --- */
+
+/* display задаётся утилитами block / inline-block по месту */
+.line-mask {
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.line-reveal {
+  transform: translateY(112%);
+  transition: transform var(--dur, 600ms) var(--ease-out-expo);
+  transition-delay: var(--d, 0ms);
+}
+
+.in-view .line-reveal {
+  transform: none;
+}
+
+/* Каскадное появление блоков (таймлайн и пр.) */
+.rise {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    transform 600ms var(--ease-out-expo),
+    opacity 400ms ease-out;
+  transition-delay: var(--d, 0ms);
+}
+
+.in-view .rise {
+  opacity: 1;
+  transform: none;
+}
+
+/* Звёздочка у «проще» — тот же конфетти-эффект, что в hero */
+.in-view .confetti {
+  opacity: 1;
+  transform: translate(0px, 0px) rotate(var(--rot, 0deg)) scale(1);
+}
+
+/* --- Лента «cases» --- */
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 18s linear infinite;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* --- Доступность: без каскадов и полётов --- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .confetti,
+  .line-reveal,
+  .rise {
+    transition: opacity 300ms ease-out;
+    transform: none;
+  }
+  .confetti {
+    transform: rotate(var(--rot, 0deg));
+  }
+  .marquee {
+    animation: none;
   }
 }

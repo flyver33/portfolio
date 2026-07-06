@@ -5,7 +5,7 @@ import Contacts from './components/Contacts/Contacts'
 
 function App() {
   return (
-    <div className="dot-grid min-h-screen">
+    <div className="min-h-screen">
       <Hero />
       <About />
       <Projects />
