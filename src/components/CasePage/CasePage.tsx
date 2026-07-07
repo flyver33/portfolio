@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import type { MouseEvent } from 'react'
-import Star from '../Star'
 import PhoneMockup from '../PhoneMockup'
-import type { CaseInfo } from '../../cases'
+import type { CaseInfo, CaseSection } from '../../cases'
 import { href, navigate } from '../../router'
 
 const SITE_TITLE = 'Людмила Сафронова — UX/UI-дизайнер'
@@ -13,9 +12,77 @@ const goHome = (e: MouseEvent<HTMLAnchorElement>) => {
   navigate('')
 }
 
-/* Страница кейса. Структура по .claude/memory/structure.md: краткое описание,
-   экраны, ссылка на сайт/Figma. «Оформленные изображения с экранами» автор
-   приведёт позже — под них добавится отдельный блок ниже экранов. */
+const ArrowLeftIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    className="w-6"
+  >
+    <path d="M19.5 12h-15M11 5.5 4.5 12l6.5 6.5" />
+  </svg>
+)
+
+const CalendarIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    className="w-5 shrink-0 text-accent"
+  >
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" />
+    <path d="M3.5 9.5h17M8.5 3v3.5M15.5 3v3.5" />
+  </svg>
+)
+
+const BriefcaseIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    className="w-5 shrink-0 text-accent"
+  >
+    <rect x="3.5" y="7.5" width="17" height="13" rx="2.5" />
+    <path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3.5 12.5h17" />
+  </svg>
+)
+
+/* Пара экранов блока: второй чуть ниже и заходит под первый,
+   при наведении каждый приподнимается */
+function SectionScreens({ section }: { section: CaseSection }) {
+  const [front, back] = section.screens
+  return (
+    <div className="flex justify-center">
+      <PhoneMockup
+        notch
+        src={front.src}
+        alt={`Экран «${front.caption}»`}
+        className="z-10 w-[46%] max-w-[240px] -rotate-3 transition-transform duration-300 hover:-translate-y-3"
+      />
+      <PhoneMockup
+        notch
+        src={back.src}
+        alt={`Экран «${back.caption}»`}
+        className="mt-12 -ml-10 w-[46%] max-w-[240px] rotate-2 transition-transform duration-300 hover:z-20 hover:-translate-y-3"
+      />
+    </div>
+  )
+}
+
+/* Страница кейса: липкая шапка (стрелка, заголовок, ссылка на фигму),
+   чипы периода и формата, описание и чередующиеся блоки «экраны + текст» */
 function CasePage({ info }: { info: CaseInfo }) {
   useEffect(() => {
     document.title = `${info.title} — Людмила Сафронова`
@@ -26,51 +93,79 @@ function CasePage({ info }: { info: CaseInfo }) {
 
   return (
     <div className="min-h-screen">
-      <header className="mx-auto max-w-6xl px-6 pt-8">
-        <a
-          href={href('')}
-          onClick={goHome}
-          className="text-[15px] font-semibold text-fog transition-colors duration-150 hover:text-white"
-        >
-          ← Все кейсы
-        </a>
+      <header className="sticky top-0 z-40 border-b border-line/60 bg-bg/85 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center gap-5 px-6 py-4">
+          <a
+            href={href('')}
+            onClick={goHome}
+            aria-label="Ко всем кейсам"
+            className="-m-2 p-2 text-fog transition-colors duration-150 hover:text-white"
+          >
+            <ArrowLeftIcon />
+          </a>
+          <h1 className="font-display text-[clamp(18px,2vw,24px)] font-semibold leading-tight">
+            {info.title}
+          </h1>
+          {info.link && (
+            <a
+              href={info.link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="ml-auto shrink-0 rounded-lg bg-accent px-5 py-2.5 text-[15px] font-semibold text-bg transition-colors duration-150 hover:bg-accent-hover active:bg-accent-press"
+            >
+              {info.link.label}
+            </a>
+          )}
+        </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 pt-16 pb-32">
-        <p className="text-sm text-mute">
-          {info.year} · {info.type}
-        </p>
-        <h1 className="font-display mt-3 flex items-center gap-4 text-[clamp(28px,3.2vw,40px)] font-semibold leading-[1.08]">
-          {info.title}
-          <Star className="w-7 shrink-0 -rotate-12 text-accent" aria-hidden="true" />
-        </h1>
-        {info.description && (
-          <p className="mt-5 max-w-xl text-xl leading-[1.3] text-fog">{info.description}</p>
-        )}
-        {info.link && (
-          <a
-            href={info.link.href}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 inline-block rounded-lg bg-accent px-6 py-3 text-[15px] font-semibold text-bg transition-colors duration-150 hover:bg-accent-hover active:bg-accent-press"
-          >
-            {info.link.label}
-          </a>
+      <main className="mx-auto max-w-6xl px-6 pt-14 pb-32">
+        {(info.timeframe || info.format) && (
+          <div className="flex flex-wrap gap-x-9 gap-y-3">
+            {info.timeframe && (
+              <span className="flex items-center gap-2.5 text-[15px] text-fog">
+                <CalendarIcon />
+                {info.timeframe}
+              </span>
+            )}
+            {info.format && (
+              <span className="flex items-center gap-2.5 text-[15px] text-fog">
+                <BriefcaseIcon />
+                {info.format}
+              </span>
+            )}
+          </div>
         )}
 
-        {info.screens ? (
-          <div className="mt-20 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {info.screens.map((screen) => (
-              <figure key={screen.caption} className="m-0">
-                <PhoneMockup
-                  src={screen.src}
-                  alt={`Экран «${screen.caption}»`}
-                  className="mx-auto w-full max-w-[280px]"
-                />
-                <figcaption className="mt-4 text-center text-sm text-fog">
-                  {screen.caption}
-                </figcaption>
-              </figure>
+        {info.description &&
+          info.description.split('\n\n').map((paragraph) => (
+            <p key={paragraph} className="mt-6 max-w-xl text-xl leading-[1.35] text-fog">
+              {paragraph}
+            </p>
+          ))}
+
+        {info.sections ? (
+          <div className="mt-28 space-y-32">
+            {info.sections.map((section, i) => (
+              <section
+                key={section.text}
+                className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20"
+              >
+                <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
+                  <SectionScreens section={section} />
+                </div>
+                <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
+                  <span
+                    aria-hidden="true"
+                    className="font-display block text-[clamp(64px,7vw,96px)] font-bold leading-none text-accent/20 select-none"
+                  >
+                    {i + 1}
+                  </span>
+                  <p className="mt-5 max-w-lg text-[17px] leading-[1.5] text-fog">
+                    {section.text}
+                  </p>
+                </div>
+              </section>
             ))}
           </div>
         ) : (
