@@ -118,6 +118,11 @@ body {
   clip-path: inset(-90px -90px 0 -90px);
 }
 
+/* Конфетти в карточках вылетает быстрее, чем в hero */
+.case-card .confetti {
+  transition-duration: 450ms, 200ms;
+}
+
 /* Иконки проекта: тот же полёт, но с меньшим отскоком, чем у звёзд */
 .confetti-soft {
   transition-timing-function: cubic-bezier(0.25, 0.8, 0.35, 1.06);

@@ -47,12 +47,13 @@ const spring =
    мелкие звёздочки — конфетти-эффект как в hero, у иконок отскок мягче. */
 function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: string[] }) {
   const [first, second, third] = screens
-  /* Иконки летят снизу, из-за плашки, за края карточки — мимо экранов */
+  /* Иконки летят снизу, из-за плашки, за края карточки — мимо экранов.
+     Каждая образует группу со звёздочкой-спутником (см. ниже) */
   const iconSpots = [
-    { pos: '-left-3 -top-4 w-8', vec: fly(64, 170, -12, 60) },
-    { pos: '-right-4 -top-5 w-9', vec: fly(-72, 180, 14, 150) },
-    { pos: '-left-6 top-[58%] w-7', vec: fly(52, 92, -8, 240) },
-    { pos: '-right-7 top-[52%] w-8', vec: fly(-60, 102, 10, 320) },
+    { pos: '-left-3 -top-4 w-9', vec: fly(64, 170, -12, 40) },
+    { pos: '-right-4 -top-5 w-10', vec: fly(-72, 180, 14, 100) },
+    { pos: '-left-6 top-[56%] w-8', vec: fly(48, 90, -8, 170) },
+    { pos: '-right-7 top-[50%] w-9', vec: fly(-56, 100, 10, 240) },
   ]
   return (
     <>
@@ -79,10 +80,12 @@ function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: st
             style={iconSpots[i % iconSpots.length].vec}
           />
         ))}
-        <Star className="confetti absolute left-[26%] -top-2 w-3.5 text-accent" style={fly(34, 130, 18, 380)} />
-        <Star className="confetti absolute right-[27%] -top-3 w-3 text-accent" style={fly(-30, 140, -12, 450)} />
-        <Star className="confetti absolute -left-3 top-[24%] w-3 text-accent" style={fly(28, 115, 22, 500)} />
-        <Star className="confetti absolute -right-3.5 top-[20%] w-3.5 text-accent" style={fly(-30, 120, -18, 420)} />
+        {/* Звёздочки-спутники: по одной при каждой иконке, летят той же
+            траекторией с небольшим отставанием — читаются одной группой */}
+        <Star className="confetti absolute left-[6%] -top-1 w-3 text-accent" style={fly(58, 160, 20, 90)} />
+        <Star className="confetti absolute right-[8%] -top-2 w-3.5 text-accent" style={fly(-64, 170, -16, 150)} />
+        <Star className="confetti absolute -left-3 top-[70%] w-3 text-accent" style={fly(42, 80, 24, 220)} />
+        <Star className="confetti absolute -right-4 top-[64%] w-3 text-accent" style={fly(-50, 88, -20, 290)} />
       </div>
     </>
   )
