@@ -84,11 +84,8 @@ function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: st
             вне групп — вместе с иконками неровная арка «случайного» конфетти */}
         <Star className="confetti absolute left-[2%] top-[1%] w-2.5 text-accent" style={fly(40, 150, 20, 210)} />
         <Star className="confetti absolute right-[1%] -top-4 w-4 text-accent" style={fly(-58, 182, -16, 60)} />
-        <Star className="confetti absolute right-[23%] top-[3%] w-2.5 text-accent" style={fly(-46, 164, 26, 320)} />
         <Star className="confetti absolute -left-8 top-[36%] w-3 text-accent" style={fly(46, 110, 24, 300)} />
-        <Star className="confetti absolute -right-6 top-[72%] w-3 text-accent" style={fly(-46, 70, -20, 130)} />
-        {/* случайные, вне групп */}
-        <Star className="confetti absolute left-[24%] -top-6 w-3 text-accent" style={fly(40, 176, -24, 260)} />
+        {/* случайная, вне групп */}
         <Star className="confetti absolute -right-9 top-[22%] w-2.5 text-accent" style={fly(-52, 126, 18, 370)} />
         {/* верхушка над центральным экраном */}
         <Star className="confetti absolute left-[42%] -top-10 w-4 text-accent" style={fly(22, 208, 16, 190)} />
