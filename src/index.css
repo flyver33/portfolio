@@ -110,6 +110,22 @@ body {
   }
 }
 
+/* --- Карточка кейса: звёзды-конфетти только при наведении --- */
+
+.case-card:hover .confetti,
+.case-card:focus-visible .confetti {
+  opacity: 1;
+  transform: translate(0px, 0px) rotate(var(--rot, 0deg)) scale(1);
+}
+
+/* В отличие от hero, в карточках звёзды в покое скрыты — на тач-устройствах
+   ховера нет, поэтому там они не показываются вовсе */
+@media (hover: none) {
+  .case-card .confetti {
+    opacity: 0;
+  }
+}
+
 /* --- Построчное появление заголовка «Обо мне» (маска-прямоугольник) --- */
 
 /* display задаётся утилитами block / inline-block по месту */

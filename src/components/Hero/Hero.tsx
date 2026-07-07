@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import type { CSSProperties } from 'react'
 import Star from '../Star'
+import { fly } from '../../confetti'
 import photoRoad from '../../assets/photo-road.jpg'
 import photoGreen from '../../assets/photo-green.png'
 import photoDiploma from '../../assets/photo-diploma.png'
@@ -10,16 +10,6 @@ const NAV_ITEMS = [
   { label: 'Мои работы', href: '#projects' },
   { label: 'Контакты', href: '#contacts' },
 ]
-
-/* Вектор полёта конфетти: откуда (относительно финальной позиции) элемент
-   вылетает — направлен от центра экрана, плюс финальный поворот и задержка */
-const fly = (fx: number, fy: number, rot: number, delay: number): CSSProperties =>
-  ({
-    '--fx': `${fx}px`,
-    '--fy': `${fy}px`,
-    '--rot': `${rot}deg`,
-    '--d': `${delay}ms`,
-  }) as CSSProperties
 
 function Hero() {
   const [revealed, setRevealed] = useState(false)
