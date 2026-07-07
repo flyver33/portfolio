@@ -52,9 +52,11 @@ function Hero() {
         </nav>
       </header>
 
-      {/* Конфетти: при наведении на имя фото и звёзды вылетают из центра */}
+      {/* Конфетти: при наведении на имя фото и звёзды подлетают к местам.
+          Стартуют не из центра, а на трети пути — как в референсном видео */}
       <div
         className={`pointer-events-none absolute inset-0 hidden md:block ${revealed ? 'revealed' : ''}`}
+        style={{ '--flight': 0.35, '--spin': '14deg', '--pop': 0.65 } as CSSProperties}
         aria-hidden="true"
       >
         <Star className="confetti absolute left-[12%] top-[17%] w-9 text-accent" style={fly(620, 300, -12, 160)} />
