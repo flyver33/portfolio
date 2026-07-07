@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { CSSProperties } from 'react'
 import Star from '../Star'
 import { fly } from '../../confetti'
 import { typo } from '../../typography'
@@ -12,8 +13,27 @@ const NAV_ITEMS = [
   { label: 'Контакты', href: '#contacts' },
 ]
 
+/* Вступление текстов играет только при первом показе hero: при возврате
+   со страницы кейса компонент монтируется заново, но каскад не повторяется */
+let introPlayed = false
+
+const delay = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties
+
 function Hero() {
   const [revealed, setRevealed] = useState(false)
+  const [entered, setEntered] = useState(introPlayed)
+
+  useEffect(() => {
+    if (introPlayed) return
+    introPlayed = true
+    // двойной rAF: скрытое состояние должно попасть в кадр до старта перехода
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => setEntered(true)),
+    )
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
+  const rise = entered ? 'rise in-view' : 'rise'
 
   return (
     <section
@@ -37,8 +57,8 @@ function Hero() {
         className={`pointer-events-none absolute inset-0 hidden md:block ${revealed ? 'revealed' : ''}`}
         aria-hidden="true"
       >
-        <Star className="confetti absolute left-[12%] top-[17%] w-9 text-accent" style={fly(620, 300, -12, 260)} />
-        <p className="confetti absolute left-[16%] top-[20%] text-[15px]" style={fly(560, 280, 4, 160)}>
+        <Star className="confetti absolute left-[12%] top-[17%] w-9 text-accent" style={fly(620, 300, -12, 160)} />
+        <p className="confetti absolute left-[16%] top-[20%] text-[15px]" style={fly(560, 280, 4, 100)}>
           Активно ищу работу!
         </p>
         <img
@@ -48,32 +68,32 @@ function Hero() {
           style={fly(580, 180, -6, 0)}
         />
 
-        <Star className="confetti absolute left-[27%] top-[42%] w-6 text-accent" style={fly(400, 60, 20, 330)} />
-        <Star className="confetti absolute left-[26%] top-[49%] w-3.5 text-accent" style={fly(420, 20, -6, 400)} />
-        <p className="confetti absolute left-[21%] top-[62%] text-[15px]" style={fly(500, -120, -8, 200)}>
+        <Star className="confetti absolute left-[27%] top-[42%] w-6 text-accent" style={fly(400, 60, 20, 200)} />
+        <Star className="confetti absolute left-[26%] top-[49%] w-3.5 text-accent" style={fly(420, 20, -6, 240)} />
+        <p className="confetti absolute left-[21%] top-[62%] text-[15px]" style={fly(500, -120, -8, 120)}>
           мне 22 года
         </p>
         <img
           src={photoGreen}
           alt=""
           className="confetti absolute left-[30%] top-[59%] w-32 rounded-3xl shadow-(--shadow-card)"
-          style={fly(340, -100, 6, 60)}
+          style={fly(340, -100, 6, 40)}
         />
-        <Star className="confetti absolute bottom-[22%] left-[30%] w-5 text-accent" style={fly(350, -230, 12, 450)} />
+        <Star className="confetti absolute bottom-[22%] left-[30%] w-5 text-accent" style={fly(350, -230, 12, 270)} />
 
-        <Star className="confetti absolute right-[32%] top-[35%] w-5 text-accent" style={fly(-300, 120, 6, 370)} />
+        <Star className="confetti absolute right-[32%] top-[35%] w-5 text-accent" style={fly(-300, 120, 6, 220)} />
         <img
           src={photoDiploma}
           alt=""
           className="confetti absolute right-[13%] top-[33%] w-48 rounded-3xl shadow-(--shadow-card)"
-          style={fly(-600, 140, -6, 120)}
+          style={fly(-600, 140, -6, 70)}
         />
-        <Star className="confetti absolute right-[12%] top-[32%] w-9 text-accent" style={fly(-640, 160, 24, 290)} />
-        <p className="confetti absolute right-[9%] top-[61%] text-[15px]" style={fly(-620, -110, 0, 230)}>
+        <Star className="confetti absolute right-[12%] top-[32%] w-9 text-accent" style={fly(-640, 160, 24, 170)} />
+        <p className="confetti absolute right-[9%] top-[61%] text-[15px]" style={fly(-620, -110, 0, 140)}>
           Программист по образованию
         </p>
-        <Star className="confetti absolute bottom-[30%] right-[29%] w-4 text-accent" style={fly(-340, -180, -12, 430)} />
-        <Star className="confetti absolute bottom-[26%] right-[26%] w-6 text-accent" style={fly(-390, -220, 6, 490)} />
+        <Star className="confetti absolute bottom-[30%] right-[29%] w-4 text-accent" style={fly(-340, -180, -12, 260)} />
+        <Star className="confetti absolute bottom-[26%] right-[26%] w-6 text-accent" style={fly(-390, -220, 6, 300)} />
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 text-center">
@@ -81,17 +101,28 @@ function Hero() {
           onMouseEnter={() => setRevealed(true)}
           onMouseLeave={() => setRevealed(false)}
         >
-          <p className="text-xl text-fog">{typo('Доброго времени суток! Меня зовут')}</p>
-          <h1 className="font-display mt-5 text-[clamp(36px,4.5vw,56px)] font-bold leading-[1.05]">
+          <p className={`${rise} text-xl text-fog`} style={delay(0)}>
+            {typo('Доброго времени суток! Меня зовут')}
+          </p>
+          <h1
+            className={`${rise} font-display mt-5 text-[clamp(36px,4.5vw,56px)] font-bold leading-[1.05]`}
+            style={delay(120)}
+          >
             Людмила Сафронова
           </h1>
-          <p className="font-display mt-4 text-[clamp(28px,3.2vw,40px)] font-semibold leading-[1.08] text-accent">
+          <p
+            className={`${rise} font-display mt-4 text-[clamp(28px,3.2vw,40px)] font-semibold leading-[1.08] text-accent`}
+            style={delay(240)}
+          >
             UX/UI-дизайнер<sup>*</sup>
           </p>
         </div>
       </div>
 
-      <p className="relative z-10 pb-14 text-center text-sm leading-[1.3] text-fog">
+      <p
+        className={`${rise} relative z-10 pb-14 text-center text-sm leading-[1.3] text-fog`}
+        style={delay(380)}
+      >
         {typo('*а также немного UX-аналитик,')}
         <br />
         {typo('веб-, продуктовый и SMM дизайнер')}
