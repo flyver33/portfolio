@@ -124,9 +124,10 @@ body {
   transition-timing-function: cubic-bezier(0.24, 0.9, 0.38, 1.12);
 }
 
-/* Иконки проекта: тот же полёт, но с ещё меньшим отскоком, чем у звёзд */
+/* Иконки проекта: быстрее и совсем без отскока — плавный ease-out */
 .case-card .confetti-soft {
-  transition-timing-function: cubic-bezier(0.25, 0.8, 0.35, 1.06);
+  transition-duration: 280ms, 140ms;
+  transition-timing-function: cubic-bezier(0.22, 0.75, 0.3, 1);
 }
 
 .case-card:hover .confetti,
