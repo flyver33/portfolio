@@ -96,7 +96,7 @@ function CasePage({ info }: { info: CaseInfo }) {
     <div className="relative min-h-screen">
       {/* Свечение как в hero, но по бокам первого экрана */}
       <div className="side-glow pointer-events-none absolute inset-x-0 top-0 h-screen" aria-hidden="true" />
-      <header className="sticky top-0 z-40 border-b border-line/60 bg-bg/85 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-line/60 bg-bg">
         <div className="mx-auto flex max-w-6xl items-center gap-5 px-6 py-4">
           <a
             href={href('')}
