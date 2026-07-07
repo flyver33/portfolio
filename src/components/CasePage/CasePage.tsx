@@ -3,6 +3,7 @@ import type { MouseEvent } from 'react'
 import PhoneMockup from '../PhoneMockup'
 import type { CaseInfo, CaseSection } from '../../cases'
 import { href, navigate } from '../../router'
+import { typo } from '../../typography'
 
 const SITE_TITLE = 'Людмила Сафронова — UX/UI-дизайнер'
 
@@ -64,7 +65,7 @@ const BriefcaseIcon = () => (
 function SectionScreens({ section }: { section: CaseSection }) {
   const [front, back] = section.screens
   return (
-    <div className="flex justify-center">
+    <div className="flex items-start justify-center">
       <PhoneMockup
         notch
         src={front.src}
@@ -92,7 +93,9 @@ function CasePage({ info }: { info: CaseInfo }) {
   }, [info])
 
   return (
-    <div className="min-h-screen">
+    <div className="relative min-h-screen">
+      {/* Свечение как в hero, но по бокам первого экрана */}
+      <div className="side-glow pointer-events-none absolute inset-x-0 top-0 h-screen" aria-hidden="true" />
       <header className="sticky top-0 z-40 border-b border-line/60 bg-bg/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center gap-5 px-6 py-4">
           <a
@@ -119,7 +122,7 @@ function CasePage({ info }: { info: CaseInfo }) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 pt-14 pb-32">
+      <main className="relative mx-auto max-w-6xl px-6 pt-14 pb-32">
         {(info.timeframe || info.format) && (
           <div className="flex flex-wrap gap-x-9 gap-y-3">
             {info.timeframe && (
@@ -139,8 +142,8 @@ function CasePage({ info }: { info: CaseInfo }) {
 
         {info.description &&
           info.description.split('\n\n').map((paragraph) => (
-            <p key={paragraph} className="mt-6 max-w-xl text-xl leading-[1.35] text-fog">
-              {paragraph}
+            <p key={paragraph} className="mt-6 text-xl leading-[1.35] text-fog">
+              {typo(paragraph)}
             </p>
           ))}
 
@@ -162,7 +165,7 @@ function CasePage({ info }: { info: CaseInfo }) {
                     {i + 1}
                   </span>
                   <p className="mt-5 max-w-lg text-[17px] leading-[1.5] text-fog">
-                    {section.text}
+                    {typo(section.text)}
                   </p>
                 </div>
               </section>

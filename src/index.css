@@ -48,6 +48,13 @@ body {
   );
 }
 
+/* Свечение hero для страницы кейса: те же тона, но по бокам */
+.side-glow {
+  background:
+    radial-gradient(ellipse 32% 42% at 0% 28%, rgba(119, 139, 255, 0.14), transparent 100%),
+    radial-gradient(ellipse 32% 42% at 100% 34%, rgba(119, 139, 255, 0.12), transparent 100%);
+}
+
 /* --- Навигация: светящееся подчёркивание --- */
 
 .nav-link {

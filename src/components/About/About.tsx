@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import Star from '../Star'
 import portrait from '../../assets/portrait-cutout.png'
 import { useInView } from '../../hooks/useInView'
+import { typo } from '../../typography'
 
 const TIMELINE = [
   {
@@ -77,7 +78,7 @@ function About() {
                 />
                 <h3 className="font-display text-xl font-semibold">{item.title}</h3>
                 <p className="mt-1 text-sm text-mute">{item.period}</p>
-                <p className="mt-2 max-w-md text-[17px] leading-[1.32] text-fog">{item.note}</p>
+                <p className="mt-2 max-w-md text-[17px] leading-[1.32] text-fog">{typo(item.note)}</p>
               </div>
             ))}
 

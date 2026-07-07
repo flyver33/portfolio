@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Star from '../Star'
 import { fly } from '../../confetti'
+import { typo } from '../../typography'
 import photoRoad from '../../assets/photo-road.jpg'
 import photoGreen from '../../assets/photo-green.png'
 import photoDiploma from '../../assets/photo-diploma.png'
@@ -80,7 +81,7 @@ function Hero() {
           onMouseEnter={() => setRevealed(true)}
           onMouseLeave={() => setRevealed(false)}
         >
-          <p className="text-xl text-fog">Доброго времени суток! Меня зовут</p>
+          <p className="text-xl text-fog">{typo('Доброго времени суток! Меня зовут')}</p>
           <h1 className="font-display mt-5 text-[clamp(36px,4.5vw,56px)] font-bold leading-[1.05]">
             Людмила Сафронова
           </h1>
@@ -91,9 +92,9 @@ function Hero() {
       </div>
 
       <p className="relative z-10 pb-14 text-center text-sm leading-[1.3] text-fog">
-        *а также немного UX-аналитик,
+        {typo('*а также немного UX-аналитик,')}
         <br />
-        веб-, продуктовый и SMM дизайнер
+        {typo('веб-, продуктовый и SMM дизайнер')}
       </p>
     </section>
   )

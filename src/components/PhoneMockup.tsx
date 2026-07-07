@@ -6,19 +6,23 @@ type PhoneMockupProps = {
   notch?: boolean
 }
 
-/* Мокап телефона: тёмный «корпус» вокруг светлого скриншота */
+/* Мокап телефона: тёмный «корпус» вокруг светлого скриншота.
+   Внешнему блоку нельзя задавать position — веер карточки кейса
+   позиционирует мокапы через className (absolute + translate) */
 function PhoneMockup({ src, alt = '', className = '', notch = false }: PhoneMockupProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-[22px] border-[3px] border-line bg-elevated p-1 shadow-(--shadow-card) ${className}`}
+      className={`overflow-hidden rounded-[22px] border-[3px] border-line bg-elevated p-1 shadow-(--shadow-card) ${className}`}
     >
-      <img src={src} alt={alt} draggable={false} className="block w-full rounded-[14px]" />
-      {notch && (
-        <div
-          aria-hidden="true"
-          className="absolute left-1/2 top-[10px] h-[14px] w-[38%] -translate-x-1/2 rounded-full bg-elevated"
-        />
-      )}
+      <div className="relative">
+        <img src={src} alt={alt} draggable={false} className="block w-full rounded-[14px]" />
+        {notch && (
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-[6px] h-[14px] w-[38%] -translate-x-1/2 rounded-full bg-elevated"
+          />
+        )}
+      </div>
     </div>
   )
 }
