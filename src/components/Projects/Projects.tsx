@@ -1,5 +1,4 @@
 import type { MouseEvent } from 'react'
-import Star from '../Star'
 import PhoneMockup from '../PhoneMockup'
 import { CASES } from '../../cases'
 import type { CaseInfo, CaseScreen } from '../../cases'
@@ -41,32 +40,44 @@ function StockPreview({ kind }: { kind: NonNullable<CaseInfo['stockPreview']> })
 const spring =
   'transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none'
 
-/* Веер из трёх экранов в мокапах телефона; при наведении раскрывается,
-   вокруг конфетти-звёзды (тот же эффект, что в hero). Низ мокапов уходит
-   за границу карточки — виден верхний «козырёк» веера. */
-function FanPreview({ screens }: { screens: CaseScreen[] }) {
+/* Веер из трёх экранов в мокапах телефона; при наведении раскрывается и
+   целиком приподнимается, а из-под плашки с названием выскакивают иконки
+   проекта (тот же конфетти-эффект, что в hero). Низ мокапов уходит за
+   границу карточки — виден верхний «козырёк» веера. */
+function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: string[] }) {
   const [first, second, third] = screens
+  /* Иконки летят снизу, из-за плашки, к своим местам по краям карточки */
+  const iconSpots = [
+    { pos: 'left-[4%] top-[10%] w-8', vec: fly(56, 160, -12, 60) },
+    { pos: 'right-[4%] top-[7%] w-9', vec: fly(-64, 170, 14, 150) },
+    { pos: 'left-[3%] top-[58%] w-7', vec: fly(40, 90, -8, 240) },
+    { pos: 'right-[3%] top-[54%] w-8', vec: fly(-48, 100, 10, 320) },
+  ]
   return (
     <>
       <PhoneMockup
         src={first.src}
-        className={`absolute left-1/2 top-8 w-24 origin-bottom -translate-x-[calc(50%+30px)] translate-y-1.5 -rotate-[7deg] ${spring} group-hover:-translate-x-[calc(50%+64px)] group-hover:translate-y-2.5 group-hover:-rotate-[15deg]`}
+        className={`absolute left-1/2 top-7 w-28 origin-bottom -translate-x-[calc(50%+34px)] translate-y-1.5 -rotate-[7deg] ${spring} group-hover:-translate-x-[calc(50%+72px)] group-hover:-translate-y-2 group-hover:-rotate-[15deg]`}
       />
       <PhoneMockup
         src={third.src}
-        className={`absolute left-1/2 top-8 w-24 origin-bottom translate-x-[calc(-50%+30px)] translate-y-1.5 rotate-[7deg] ${spring} group-hover:translate-x-[calc(-50%+64px)] group-hover:translate-y-2.5 group-hover:rotate-[15deg]`}
+        className={`absolute left-1/2 top-7 w-28 origin-bottom translate-x-[calc(-50%+34px)] translate-y-1.5 rotate-[7deg] ${spring} group-hover:translate-x-[calc(-50%+72px)] group-hover:-translate-y-2 group-hover:rotate-[15deg]`}
       />
       <PhoneMockup
         src={second.src}
-        className={`absolute left-1/2 top-8 z-10 w-24 origin-bottom -translate-x-1/2 ${spring} group-hover:-translate-y-2`}
+        className={`absolute left-1/2 top-7 z-10 w-28 origin-bottom -translate-x-1/2 ${spring} group-hover:-translate-y-3`}
       />
-      {/* Звёзды видны только при наведении (см. .case-card в index.css) */}
+      {/* Иконки видны только при наведении (см. .case-card в index.css) */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
-        <Star className="confetti absolute left-[13%] top-[16%] w-7 text-accent" style={fly(110, 60, -14, 80)} />
-        <Star className="confetti absolute left-[6%] top-[54%] w-5 text-accent" style={fly(130, -10, 10, 200)} />
-        <Star className="confetti absolute right-[11%] top-[13%] w-8 text-accent" style={fly(-120, 70, 22, 140)} />
-        <Star className="confetti absolute right-[6%] top-[56%] w-4 text-accent" style={fly(-120, -30, -8, 260)} />
-        <Star className="confetti absolute left-[27%] top-[7%] w-4 text-accent" style={fly(80, 90, 6, 320)} />
+        {icons.map((icon, i) => (
+          <img
+            key={icon}
+            src={icon}
+            alt=""
+            className={`confetti absolute ${iconSpots[i % iconSpots.length].pos}`}
+            style={iconSpots[i % iconSpots.length].vec}
+          />
+        ))}
       </div>
     </>
   )
@@ -94,7 +105,7 @@ function Projects() {
             >
               <div className="relative h-44 overflow-hidden rounded-t-2xl bg-bg">
                 {item.screens ? (
-                  <FanPreview screens={item.screens} />
+                  <FanPreview screens={item.screens} icons={item.hoverIcons} />
                 ) : (
                   <StockPreview kind={item.stockPreview ?? 'browser'} />
                 )}

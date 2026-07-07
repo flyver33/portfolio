@@ -1,6 +1,10 @@
 import dosimeterHome from './assets/dosimeter-home.png'
 import dosimeterMeasure from './assets/dosimeter-measure.png'
 import dosimeterJournal from './assets/dosimeter-journal.png'
+import dosimeterGamma from './assets/dosimeter-gamma.svg'
+import dosimeterBeta from './assets/dosimeter-beta.svg'
+import dosimeterAlpha from './assets/dosimeter-alpha.svg'
+import dosimeterRad from './assets/dosimeter-rad.svg'
 
 export type CaseScreen = {
   src: string
@@ -16,6 +20,8 @@ export type CaseInfo = {
   description?: string
   /** Экраны: используются и в веере карточки, и на странице кейса */
   screens?: CaseScreen[]
+  /** Иконки проекта, выскакивающие из-под плашки карточки при наведении */
+  hoverIcons?: string[]
   /** Стилизованная заглушка превью, пока нет реальных экранов */
   stockPreview?: 'browser' | 'phone' | 'duo'
   /** Ссылка на действующий сайт или Figma */
@@ -36,6 +42,7 @@ export const CASES: CaseInfo[] = [
       { src: dosimeterMeasure, caption: 'Измерение' },
       { src: dosimeterJournal, caption: 'Журнал' },
     ],
+    hoverIcons: [dosimeterGamma, dosimeterBeta, dosimeterAlpha, dosimeterRad],
     // TODO: ссылка на сайт/Figma — автор приведёт позже
   },
   { slug: 'case-2', title: 'Кейс №2', year: '2025', type: 'Веб-сайт', stockPreview: 'browser' },
