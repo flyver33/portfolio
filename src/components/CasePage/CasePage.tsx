@@ -76,7 +76,7 @@ function CasePage({ info }: { info: CaseInfo }) {
         ) : (
           /* TODO: контент кейса (описание, экраны, ссылка) автор приведёт позже */
           <p className="mt-20 max-w-xl text-[17px] leading-[1.32] text-fog">
-            Материалы этого кейса скоро появятся.
+            Материалы этого кейса скоро появятся
           </p>
         )}
       </main>

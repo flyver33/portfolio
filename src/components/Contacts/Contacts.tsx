@@ -36,7 +36,7 @@ function Contacts() {
       <div className="mx-auto max-w-xl px-6">
         <h2 className="font-display text-[28px] font-semibold">Контакты</h2>
         <p className="mt-4 text-[17px] leading-[1.32] text-fog">
-          Активно ищу работу и открыта к предложениям — напишите мне, отвечу быстро.
+          Активно ищу работу и открыта к предложениям — напишите мне, отвечу быстро
         </p>
         <ul className="mt-8">
           {CONTACTS.map((contact) => (

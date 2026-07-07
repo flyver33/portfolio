@@ -36,7 +36,7 @@ export const CASES: CaseInfo[] = [
     title: 'Мой дозиметр',
     year: '2025',
     type: 'Мобильное приложение',
-    description: 'Приложение для беспроводного управления дозиметром.',
+    description: 'Приложение для беспроводного управления дозиметром',
     screens: [
       { src: dosimeterHome, caption: 'Подключение прибора' },
       { src: dosimeterMeasure, caption: 'Измерение' },
