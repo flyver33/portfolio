@@ -50,10 +50,10 @@ function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: st
   /* Иконки летят снизу, из-за плашки, за края карточки — мимо экранов.
      Вместе со звёздочками рассеяны по неровной арке вокруг веера */
   const iconSpots = [
-    { pos: 'left-[6%] -top-6 w-9', vec: fly(58, 175, -12, 40) },
-    { pos: 'right-[9%] -top-8 w-10', vec: fly(-66, 190, 14, 100) },
-    { pos: '-left-6 top-[56%] w-8', vec: fly(48, 90, -8, 170) },
-    { pos: '-right-7 top-[46%] w-9', vec: fly(-56, 96, 10, 240) },
+    { pos: 'left-[3%] -top-9 w-9', vec: fly(58, 185, -12, 40) },
+    { pos: 'right-[6%] -top-11 w-10', vec: fly(-66, 200, 14, 100) },
+    { pos: '-left-9 top-[58%] w-8', vec: fly(52, 90, -8, 170) },
+    { pos: '-right-10 top-[48%] w-9', vec: fly(-60, 96, 10, 240) },
   ]
   return (
     <>
@@ -82,14 +82,17 @@ function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: st
         ))}
         {/* Звёздочки: спутники при иконках на разном отлёте + пара случайных
             вне групп — вместе с иконками неровная арка «случайного» конфетти */}
-        <Star className="confetti absolute -left-2 top-[10%] w-2.5 text-accent" style={fly(40, 140, 20, 210)} />
-        <Star className="confetti absolute right-[1%] -top-3 w-4 text-accent" style={fly(-58, 178, -16, 60)} />
-        <Star className="confetti absolute right-[19%] top-[1%] w-2.5 text-accent" style={fly(-50, 168, 26, 320)} />
+        <Star className="confetti absolute left-[2%] top-[1%] w-2.5 text-accent" style={fly(40, 150, 20, 210)} />
+        <Star className="confetti absolute right-[1%] -top-4 w-4 text-accent" style={fly(-58, 182, -16, 60)} />
+        <Star className="confetti absolute right-[23%] top-[3%] w-2.5 text-accent" style={fly(-46, 164, 26, 320)} />
         <Star className="confetti absolute -left-8 top-[36%] w-3 text-accent" style={fly(46, 110, 24, 300)} />
-        <Star className="confetti absolute -right-3 top-[66%] w-3 text-accent" style={fly(-44, 78, -20, 130)} />
+        <Star className="confetti absolute -right-6 top-[72%] w-3 text-accent" style={fly(-46, 70, -20, 130)} />
         {/* случайные, вне групп */}
-        <Star className="confetti absolute left-[24%] -top-5 w-3 text-accent" style={fly(40, 172, -24, 260)} />
+        <Star className="confetti absolute left-[24%] -top-6 w-3 text-accent" style={fly(40, 176, -24, 260)} />
         <Star className="confetti absolute -right-9 top-[22%] w-2.5 text-accent" style={fly(-52, 126, 18, 370)} />
+        {/* верхушка над центральным экраном */}
+        <Star className="confetti absolute left-[42%] -top-10 w-4 text-accent" style={fly(22, 208, 16, 190)} />
+        <Star className="confetti absolute left-[56%] -top-7 w-2.5 text-accent" style={fly(-18, 196, -22, 350)} />
       </div>
     </>
   )
