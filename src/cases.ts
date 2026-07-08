@@ -13,6 +13,15 @@ import dosimeterGamma from './assets/dosimeter-gamma.svg'
 import dosimeterBeta from './assets/dosimeter-beta.svg'
 import dosimeterAlpha from './assets/dosimeter-alpha.svg'
 import dosimeterRad from './assets/dosimeter-rad.svg'
+import effectiveBooking from './assets/effective-booking.png'
+import effectiveBookings from './assets/effective-bookings.png'
+import effectiveCancel from './assets/effective-cancel.png'
+import effectiveProcess1 from './assets/effective-process-1.png'
+import effectiveProcess2 from './assets/effective-process-2.png'
+import effectiveViews2 from './assets/effective-views-2.png'
+import effectiveHome1 from './assets/effective-home-1.png'
+import effectiveHome2 from './assets/effective-home-2.png'
+import effectiveStar from './assets/effective-star.svg'
 
 export type CaseScreen = {
   src: string
@@ -101,7 +110,45 @@ export const CASES: CaseInfo[] = [
       href: 'https://www.figma.com/design/iQ8AZJg3leYsIheZ35KSsM/%D0%94%D0%BE%D0%B7%D0%B8%D0%BC%D0%B5%D1%82%D1%80?node-id=58686-2&t=gqlPzGG8dtcLOa2P-1',
     },
   },
-  { slug: 'case-2', title: 'Кейс №2', year: '2025', type: 'Веб-сайт', stockPreview: 'browser' },
+  {
+    slug: 'effective-office',
+    title: 'Effective Office',
+    year: '2025',
+    type: 'Мобильное приложение',
+    description:
+      'Делали с компанией Effective мобильное приложение для бронирования мест в их офисе. У них уже есть такое приложение, но им мало кто пользуется из-за неудобства и очень долгого процесса бронирования, и нашей задачей было сделать максимально быструю и удобную бронь для постоянных и временных сотрудников',
+    timeframe: 'Январь–апрель 2025',
+    format: 'Effective',
+    screens: [
+      { src: effectiveBookings, caption: 'Брони на неделю' },
+      { src: effectiveBooking, caption: 'Бронирование' },
+      { src: effectiveCancel, caption: 'Отмена брони' },
+    ],
+    sections: [
+      {
+        text: 'У бронирования есть много настроек: цикличность бронирования, период, время, но чаще всего, особенно временные гости, бронируют сегодня на весь день, поэтому автоматически стоит эта настройка, чтобы можно было забронировать место в один клик. Также приоритет выбора гостей — время работы, а не место, поэтому сначала выбирается время, а потом уже загружаются доступные места',
+        screens: [
+          { src: effectiveProcess1, caption: 'Настройки брони' },
+          { src: effectiveProcess2, caption: 'Выбор периода' },
+        ],
+      },
+      {
+        text: 'Места могут отображаться списком, это удобно, если человеку без разницы, на каком месте ему сидеть, либо он уже знает своё место по названию. Если человек новенький и знает только расположение, можно выбрать место с помощью карты',
+        screens: [
+          { src: effectiveBooking, caption: 'Места списком' },
+          { src: effectiveViews2, caption: 'Места на карте' },
+        ],
+      },
+      {
+        text: 'Все забронированные места отображаются на главной странице при входе в приложение. Также брони можно отфильтровать по дате, можно удалять и редактировать',
+        screens: [
+          { src: effectiveHome1, caption: 'Брони на главной' },
+          { src: effectiveHome2, caption: 'Главная без броней' },
+        ],
+      },
+    ],
+    hoverIcons: [effectiveStar],
+  },
   { slug: 'case-3', title: 'Кейс №3', year: '2024', type: 'Веб-сайт', stockPreview: 'duo' },
   { slug: 'case-4', title: 'Кейс №4', year: '2024', type: 'Мобильное приложение', stockPreview: 'duo' },
   { slug: 'case-5', title: 'Кейс №5', year: '2024', type: 'Веб-сайт', stockPreview: 'browser' },
