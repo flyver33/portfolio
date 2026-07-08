@@ -32,7 +32,8 @@ function About() {
   const timeline = useInView<HTMLDivElement>(0.25)
 
   return (
-    <section id="about" className="relative scroll-mt-8 overflow-hidden pt-28">
+    // overflow-x-clip: гасим горизонтальный выход ленты, но не режем её по вертикали
+    <section id="about" className="relative scroll-mt-8 overflow-x-clip pt-28">
       <div className="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-[3fr_2fr]">
         <div className="pb-24">
           <div ref={heading.ref} className={heading.inView ? 'in-view' : ''}>
@@ -43,17 +44,17 @@ function About() {
                 </span>
               </span>
               <span className="line-mask block">
-                <span className="line-reveal inline-flex items-baseline gap-[0.35em] whitespace-nowrap" style={delay(250)}>
+                <span className="line-reveal inline-flex items-baseline gap-[0.35em] whitespace-nowrap" style={delay(400)}>
                   <span>людей чуточку</span>
                   {/* «проще» догоняет с ускорением, звезда — конфетти как в hero */}
                   <span className="line-mask inline-block">
-                    <span className="line-reveal inline-block text-accent" style={delay(520, 320)}>
+                    <span className="line-reveal inline-block text-accent" style={delay(850, 450)}>
                       проще
                     </span>
                   </span>
                   <Star
                     className="confetti inline-block w-7 self-center text-accent"
-                    style={{ '--fx': '-48px', '--fy': '36px', '--rot': '18deg', '--d': '780ms' } as CSSProperties}
+                    style={{ '--fx': '-48px', '--fy': '36px', '--rot': '18deg', '--d': '1250ms' } as CSSProperties}
                     aria-hidden="true"
                   />
                 </span>
@@ -101,25 +102,29 @@ function About() {
           <img
             src={portrait}
             alt="Людмила Сафронова"
-            className="absolute bottom-0 left-1/2 w-full max-w-sm -translate-x-1/2"
+            className="absolute bottom-0 left-1/2 w-[115%] max-w-[470px] -translate-x-1/2"
           />
         </div>
       </div>
 
       {/* Лента cases во весь экран, обрезает фото снизу */}
-      <div className="relative z-10 -mx-10 -mt-14 -rotate-2 overflow-hidden bg-accent py-3">
-        <div className="marquee font-display text-2xl font-semibold text-bg" aria-hidden="true">
-          {Array.from({ length: 2 }).map((_, half) => (
-            <span key={half} className="flex shrink-0">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <span key={i} className="mx-6 flex items-center gap-12">
-                  cases
-                  <Star className="w-5" />
-                </span>
-              ))}
-            </span>
-          ))}
+      <div className="relative z-10 -mx-10 -mt-14 -rotate-2">
+        <div className="overflow-hidden bg-accent py-3">
+          <div className="marquee font-display text-2xl font-semibold text-bg" aria-hidden="true">
+            {Array.from({ length: 2 }).map((_, half) => (
+              <span key={half} className="flex shrink-0">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <span key={i} className="mx-6 flex items-center gap-12">
+                    cases
+                    <Star className="w-5" />
+                  </span>
+                ))}
+              </span>
+            ))}
+          </div>
         </div>
+        {/* Наклонная плашка фона: прячет прямой нижний срез фото под лентой */}
+        <div className="absolute left-0 top-full h-16 w-full bg-bg" aria-hidden="true" />
       </div>
     </section>
   )
