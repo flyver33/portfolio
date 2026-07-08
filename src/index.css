@@ -166,7 +166,7 @@ body {
 
 .line-reveal {
   transform: translateY(112%);
-  transition: transform var(--dur, 600ms) var(--ease-out-expo);
+  transition: transform var(--dur, 900ms) var(--ease-out-expo);
   transition-delay: var(--d, 0ms);
 }
 
