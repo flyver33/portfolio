@@ -42,11 +42,52 @@ function StockPreview({ kind }: { kind: NonNullable<CaseInfo['stockPreview']> })
 const spring =
   'transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none'
 
+/* Крупные звёзды-конфетти карточки: расположение как у иконок веера,
+   но мельче. У Effective Office — оранжевые (свой svg через src),
+   у остальных веб-кейсов — стандартные фиолетовые */
+const bigStarSpots = [
+  { pos: 'left-[3%] -top-9 w-6', vec: fly(58, 185, -12, 40) },
+  { pos: 'right-[6%] -top-11 w-7', vec: fly(-66, 200, 14, 100) },
+  { pos: '-left-9 top-[58%] w-5', vec: fly(52, 90, -8, 170) },
+]
+
+function BigStars({ src }: { src?: string }) {
+  return (
+    <>
+      {bigStarSpots.map((spot, i) =>
+        src ? (
+          <img
+            key={`${spot.pos}-${i}`}
+            src={src}
+            alt=""
+            className={`confetti confetti-soft absolute ${spot.pos}`}
+            style={spot.vec}
+          />
+        ) : (
+          <Star
+            key={`${spot.pos}-${i}`}
+            className={`confetti confetti-soft absolute ${spot.pos} text-accent`}
+            style={spot.vec}
+          />
+        ),
+      )}
+    </>
+  )
+}
+
 /* Веер из трёх экранов в мокапах телефона; при наведении раскрывается,
    приподнимается и вылезает за рамки карточки (обрезка только снизу — под
    плашкой, см. .fan-clip). Из-под плашки выскакивают иконки проекта и
    мелкие звёздочки — конфетти-эффект как в hero, у иконок отскок мягче. */
-function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: string[] }) {
+function FanPreview({
+  screens,
+  icons = [],
+  starIcon,
+}: {
+  screens: CaseScreen[]
+  icons?: string[]
+  starIcon?: string
+}) {
   const [first, second, third] = screens
   /* Иконки летят снизу, из-за плашки, за края карточки — мимо экранов.
      Вместе со звёздочками рассеяны по неровной арке вокруг веера */
@@ -72,6 +113,7 @@ function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: st
       />
       {/* Иконки и звёздочки видны только при наведении (см. .case-card в index.css) */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+        {starIcon && <BigStars src={starIcon} />}
         {icons.map((icon, i) => (
           <img
             key={`${icon}-${i}`}
@@ -117,6 +159,7 @@ function WebFanPreview({ web }: { web: CaseWebScreens }) {
       />
       {/* Звёздочки видны только при наведении (см. .case-card в index.css) */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+        <BigStars />
         <Star className="confetti absolute left-[4%] -top-6 w-3 text-accent" style={fly(44, 170, 18, 60)} />
         <Star className="confetti absolute right-[3%] -top-8 w-4 text-accent" style={fly(-52, 186, -14, 150)} />
         <Star className="confetti absolute -left-7 top-[42%] w-3 text-accent" style={fly(48, 104, 22, 250)} />
@@ -140,6 +183,7 @@ function SoloWebPreview({ screen }: { screen: CaseScreen }) {
       />
       {/* Звёздочки видны только при наведении (см. .case-card в index.css) */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+        <BigStars />
         <Star className="confetti absolute left-[5%] -top-6 w-3 text-accent" style={fly(42, 168, 20, 70)} />
         <Star className="confetti absolute right-[4%] -top-8 w-4 text-accent" style={fly(-50, 184, -16, 160)} />
         <Star className="confetti absolute -left-7 top-[40%] w-3 text-accent" style={fly(46, 102, 24, 260)} />
@@ -175,7 +219,7 @@ function Projects() {
                 className={`relative h-44 rounded-t-2xl bg-bg ${item.screens || item.webScreens || item.cardScreen ? 'fan-clip' : 'overflow-hidden'}`}
               >
                 {item.screens ? (
-                  <FanPreview screens={item.screens} icons={item.hoverIcons} />
+                  <FanPreview screens={item.screens} icons={item.hoverIcons} starIcon={item.starIcon} />
                 ) : item.webScreens ? (
                   <WebFanPreview web={item.webScreens} />
                 ) : item.cardScreen ? (

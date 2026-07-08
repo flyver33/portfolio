@@ -70,6 +70,8 @@ export type CaseInfo = {
   sections?: CaseSection[]
   /** Иконки проекта, выскакивающие из-под плашки карточки при наведении */
   hoverIcons?: string[]
+  /** Своя крупная звезда конфетти карточки (вместо стандартной фиолетовой) */
+  starIcon?: string
   /** Стилизованная заглушка превью, пока нет реальных экранов */
   stockPreview?: 'browser' | 'phone' | 'duo'
   /** Ссылка на действующий сайт или Figma */
@@ -166,7 +168,7 @@ export const CASES: CaseInfo[] = [
         ],
       },
     ],
-    hoverIcons: [effectiveStar, effectiveStar, effectiveStar],
+    starIcon: effectiveStar,
   },
   {
     slug: 'kip',
