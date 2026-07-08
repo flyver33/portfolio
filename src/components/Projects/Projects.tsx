@@ -160,8 +160,9 @@ function WebFanPreview({ web }: { web: CaseWebScreens }) {
       {/* Звёздочки видны только при наведении (см. .case-card в index.css) */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
         <BigStars />
-        <Star className="confetti absolute left-[4%] -top-6 w-3 text-accent" style={fly(44, 170, 18, 60)} />
-        <Star className="confetti absolute right-[3%] -top-8 w-4 text-accent" style={fly(-52, 186, -14, 150)} />
+        {/* Мелкие угловые — со сдвигом вниз от крупных BigStars, чтобы не накладывались */}
+        <Star className="confetti absolute left-[2%] top-[2%] w-3 text-accent" style={fly(44, 170, 18, 60)} />
+        <Star className="confetti absolute right-[1%] -top-3 w-4 text-accent" style={fly(-52, 186, -14, 150)} />
         <Star className="confetti absolute -left-7 top-[42%] w-3 text-accent" style={fly(48, 104, 22, 250)} />
         <Star className="confetti absolute -right-8 top-[30%] w-2.5 text-accent" style={fly(-46, 118, 16, 330)} />
         <Star className="confetti absolute left-[38%] -top-9 w-3.5 text-accent" style={fly(20, 200, -20, 190)} />
@@ -184,8 +185,9 @@ function SoloWebPreview({ screen }: { screen: CaseScreen }) {
       {/* Звёздочки видны только при наведении (см. .case-card в index.css) */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
         <BigStars />
-        <Star className="confetti absolute left-[5%] -top-6 w-3 text-accent" style={fly(42, 168, 20, 70)} />
-        <Star className="confetti absolute right-[4%] -top-8 w-4 text-accent" style={fly(-50, 184, -16, 160)} />
+        {/* Мелкие угловые — со сдвигом вниз от крупных BigStars, чтобы не накладывались */}
+        <Star className="confetti absolute left-[3%] top-[3%] w-3 text-accent" style={fly(42, 168, 20, 70)} />
+        <Star className="confetti absolute right-[1%] -top-2 w-4 text-accent" style={fly(-50, 184, -16, 160)} />
         <Star className="confetti absolute -left-7 top-[40%] w-3 text-accent" style={fly(46, 102, 24, 260)} />
         <Star className="confetti absolute -right-8 top-[28%] w-2.5 text-accent" style={fly(-44, 116, 18, 340)} />
         <Star className="confetti absolute left-[36%] -top-9 w-3.5 text-accent" style={fly(22, 198, -18, 200)} />
