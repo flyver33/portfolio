@@ -1,16 +1,20 @@
+import type { ReactNode } from 'react'
+
 type MonitorMockupProps = {
-  src: string
+  src?: string
   alt?: string
   className?: string
+  /** Вместо скриншота — произвольный контент экрана (например, видео) */
+  children?: ReactNode
 }
 
-/* Мокап монитора: скриншот в тёмной рамке на ножке с основанием.
-   Ширину и позицию задаёт className */
-function MonitorMockup({ src, alt = '', className = '' }: MonitorMockupProps) {
+/* Мокап монитора: скриншот (или контент-children) в тёмной рамке на ножке
+   с основанием. Ширину и позицию задаёт className */
+function MonitorMockup({ src, alt = '', className = '', children }: MonitorMockupProps) {
   return (
     <div className={className}>
       <div className="overflow-hidden rounded-2xl border-[3px] border-line bg-elevated p-1.5 shadow-(--shadow-card)">
-        <img src={src} alt={alt} draggable={false} className="block w-full rounded-[9px]" />
+        {children ?? <img src={src} alt={alt} draggable={false} className="block w-full rounded-[9px]" />}
       </div>
       <div
         aria-hidden="true"
