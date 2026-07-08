@@ -25,6 +25,9 @@ import effectiveStar from './assets/effective-star.svg'
 import kipSite from './assets/kip-site.png'
 import kipPartner from './assets/kip-phone-partner.png'
 import kipTariffs from './assets/kip-phone-tariffs.png'
+import hacksSite from './assets/hacks-site.png'
+import hacksDemo from './assets/hacks-demo.mp4'
+import hacksPoster from './assets/hacks-poster.jpg'
 
 export type CaseScreen = {
   src: string
@@ -58,6 +61,11 @@ export type CaseInfo = {
   screens?: CaseScreen[]
   /** Веб-кейс: сайт + мобильные экраны — и для карточки, и для витрины страницы */
   webScreens?: CaseWebScreens
+  /** Веб-кейс с одним экраном: скрин сайта в браузере для карточки */
+  cardScreen?: CaseScreen
+  /** Видео-демо на странице кейса — в мониторе под описанием; таймкоды
+      вида «0:32» в описании становятся ссылками-перемотками */
+  video?: { src: string; poster: string }
   /** Блоки страницы кейса: экраны и текст чередуются по сторонам */
   sections?: CaseSection[]
   /** Иконки проекта, выскакивающие из-под плашки карточки при наведении */
@@ -178,7 +186,18 @@ export const CASES: CaseInfo[] = [
     },
     link: { label: 'Перейти на сайт', href: 'https://kipfinance.ru/' },
   },
-  { slug: 'case-4', title: 'Кейс №4', year: '2024', type: 'Мобильное приложение', stockPreview: 'duo' },
+  {
+    slug: 'hackathons',
+    title: 'Сайты для хакатонов',
+    year: '2024–2025',
+    type: 'Веб-сайт',
+    description:
+      'На кафедре, на которой я училась, проводились хакатоны. Моя задача была сделать сайт для каждого из хакатонов. Здесь 3 сайта с разницей где-то в полгода. Можно посмотреть прогресс :)\n\n0:00 — 1 сайт, 0:32 — 2 сайт, 0:56 — 3 сайт',
+    timeframe: '2024 · 2025',
+    format: 'ПМиФИ, ОмГТУ',
+    cardScreen: { src: hacksSite, caption: 'Сайт хакатона' },
+    video: { src: hacksDemo, poster: hacksPoster },
+  },
   { slug: 'case-5', title: 'Кейс №5', year: '2024', type: 'Веб-сайт', stockPreview: 'browser' },
   { slug: 'case-6', title: 'Кейс №6', year: '2023', type: 'Мобильное приложение', stockPreview: 'phone' },
 ]

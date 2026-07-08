@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import type { MouseEvent } from 'react'
+import { useEffect, useRef } from 'react'
+import type { MouseEvent, RefObject } from 'react'
 import PhoneMockup from '../PhoneMockup'
 import MonitorMockup from '../MonitorMockup'
 import type { CaseInfo, CaseSection, CaseWebScreens } from '../../cases'
@@ -115,15 +115,90 @@ function WebShowcase({ web }: { web: CaseWebScreens }) {
   )
 }
 
+/* Витрина видео-демо: монитор с видео по центру, за рамкой пара мягких
+   градиентных пятен — фиолетовое в тон акценту и тёплое в тон сайтам */
+function VideoShowcase({
+  video,
+  videoRef,
+}: {
+  video: NonNullable<CaseInfo['video']>
+  videoRef: RefObject<HTMLVideoElement | null>
+}) {
+  return (
+    <div className="relative mt-20">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-[10%] left-[-6%] h-[75%] w-[55%] rounded-full bg-[radial-gradient(closest-side,rgba(119,139,255,0.22),transparent)] blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-[6%] right-[-5%] h-[70%] w-[50%] rounded-full bg-[radial-gradient(closest-side,rgba(255,178,102,0.15),transparent)] blur-3xl"
+      />
+      <MonitorMockup className="relative mx-auto sm:w-[84%]">
+        <video
+          ref={videoRef}
+          src={video.src}
+          poster={video.poster}
+          controls
+          playsInline
+          preload="metadata"
+          className="block aspect-video w-full rounded-[9px]"
+        />
+      </MonitorMockup>
+    </div>
+  )
+}
+
+/* Таймкоды вида «0:32» в тексте описания становятся кнопками-перемотками
+   видео ниже. split с захватом: нечётные индексы — сами таймкоды */
+const TIMECODE = /(\d+:\d{2})/g
+
+const toSeconds = (timecode: string) => {
+  const [minutes, seconds] = timecode.split(':').map(Number)
+  return minutes * 60 + seconds
+}
+
+function TimecodeText({ text, onSeek }: { text: string; onSeek: (seconds: number) => void }) {
+  return (
+    <>
+      {text.split(TIMECODE).map((part, i) =>
+        i % 2 === 1 ? (
+          <button
+            key={`${part}-${i}`}
+            type="button"
+            onClick={() => onSeek(toSeconds(part))}
+            aria-label={`Перемотать видео на ${part}`}
+            className="cursor-pointer font-medium text-accent underline decoration-accent/50 decoration-dotted underline-offset-4 transition-colors duration-150 hover:text-accent-hover"
+          >
+            {part}
+          </button>
+        ) : (
+          typo(part)
+        ),
+      )}
+    </>
+  )
+}
+
 /* Страница кейса: липкая шапка (стрелка, заголовок, ссылка на фигму),
    чипы периода и формата, описание и чередующиеся блоки «экраны + текст» */
 function CasePage({ info }: { info: CaseInfo }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   useEffect(() => {
     document.title = `${info.title} — Людмила Сафронова`
     return () => {
       document.title = SITE_TITLE
     }
   }, [info])
+
+  const seekTo = (seconds: number) => {
+    const video = videoRef.current
+    if (!video) return
+    video.currentTime = seconds
+    void video.play()
+    video.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
 
   return (
     <div className="relative min-h-screen">
@@ -176,7 +251,7 @@ function CasePage({ info }: { info: CaseInfo }) {
         {info.description &&
           info.description.split('\n\n').map((paragraph) => (
             <p key={paragraph} className="mt-6 text-xl leading-[1.35] text-fog">
-              {typo(paragraph)}
+              {info.video ? <TimecodeText text={paragraph} onSeek={seekTo} /> : typo(paragraph)}
             </p>
           ))}
 
@@ -206,6 +281,8 @@ function CasePage({ info }: { info: CaseInfo }) {
           </div>
         ) : info.webScreens ? (
           <WebShowcase web={info.webScreens} />
+        ) : info.video ? (
+          <VideoShowcase video={info.video} videoRef={videoRef} />
         ) : (
           /* TODO: контент кейса (описание, экраны, ссылка) автор приведёт позже */
           <p className="mt-20 max-w-xl text-[17px] leading-[1.32] text-fog">

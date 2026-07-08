@@ -128,6 +128,29 @@ function WebFanPreview({ web }: { web: CaseWebScreens }) {
   )
 }
 
+/* Превью веб-кейса с одним экраном: скрин сайта в браузере по центру;
+   при наведении приподнимается, из-под плашки вылетают только стандартные
+   фиолетовые звёздочки */
+function SoloWebPreview({ screen }: { screen: CaseScreen }) {
+  return (
+    <>
+      <BrowserMockup
+        src={screen.src}
+        className={`absolute left-1/2 top-10 w-[72%] -translate-x-1/2 ${spring} group-hover:-translate-y-6`}
+      />
+      {/* Звёздочки видны только при наведении (см. .case-card в index.css) */}
+      <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+        <Star className="confetti absolute left-[5%] -top-6 w-3 text-accent" style={fly(42, 168, 20, 70)} />
+        <Star className="confetti absolute right-[4%] -top-8 w-4 text-accent" style={fly(-50, 184, -16, 160)} />
+        <Star className="confetti absolute -left-7 top-[40%] w-3 text-accent" style={fly(46, 102, 24, 260)} />
+        <Star className="confetti absolute -right-8 top-[28%] w-2.5 text-accent" style={fly(-44, 116, 18, 340)} />
+        <Star className="confetti absolute left-[36%] -top-9 w-3.5 text-accent" style={fly(22, 198, -18, 200)} />
+        <Star className="confetti absolute left-[60%] -top-5 w-2.5 text-accent" style={fly(-14, 186, 22, 390)} />
+      </div>
+    </>
+  )
+}
+
 const goTo = (slug: string) => (e: MouseEvent<HTMLAnchorElement>) => {
   // модификаторы и не-левую кнопку отдаём браузеру (новая вкладка и т.п.)
   if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
@@ -149,12 +172,14 @@ function Projects() {
               className="case-card group relative block rounded-2xl border border-line bg-elevated shadow-(--shadow-card) transition-all duration-300 ease-out hover:z-20 hover:-translate-y-2 hover:shadow-(--shadow-hover)"
             >
               <div
-                className={`relative h-44 rounded-t-2xl bg-bg ${item.screens || item.webScreens ? 'fan-clip' : 'overflow-hidden'}`}
+                className={`relative h-44 rounded-t-2xl bg-bg ${item.screens || item.webScreens || item.cardScreen ? 'fan-clip' : 'overflow-hidden'}`}
               >
                 {item.screens ? (
                   <FanPreview screens={item.screens} icons={item.hoverIcons} />
                 ) : item.webScreens ? (
                   <WebFanPreview web={item.webScreens} />
+                ) : item.cardScreen ? (
+                  <SoloWebPreview screen={item.cardScreen} />
                 ) : (
                   <StockPreview kind={item.stockPreview ?? 'browser'} />
                 )}
