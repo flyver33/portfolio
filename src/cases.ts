@@ -147,7 +147,7 @@ export const CASES: CaseInfo[] = [
         ],
       },
     ],
-    hoverIcons: [effectiveStar],
+    hoverIcons: [effectiveStar, effectiveStar, effectiveStar],
   },
   { slug: 'case-3', title: 'Кейс №3', year: '2024', type: 'Веб-сайт', stockPreview: 'duo' },
   { slug: 'case-4', title: 'Кейс №4', year: '2024', type: 'Мобильное приложение', stockPreview: 'duo' },

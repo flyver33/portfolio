@@ -73,7 +73,7 @@ function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: st
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
         {icons.map((icon, i) => (
           <img
-            key={icon}
+            key={`${icon}-${i}`}
             src={icon}
             alt=""
             className={`confetti confetti-soft absolute ${iconSpots[i % iconSpots.length].pos}`}
