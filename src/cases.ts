@@ -28,6 +28,14 @@ import kipTariffs from './assets/kip-phone-tariffs.png'
 import hacksSite from './assets/hacks-site.png'
 import hacksDemo from './assets/hacks-demo.mp4'
 import hacksPoster from './assets/hacks-poster.jpg'
+import vmesteHome from './assets/vmeste-home.png'
+import vmesteEvent from './assets/vmeste-event.png'
+import vmesteCreate from './assets/vmeste-create.png'
+import vmesteSearch from './assets/vmeste-search.png'
+import vmesteBooking from './assets/vmeste-booking.png'
+import vmesteFriends from './assets/vmeste-friends.png'
+import vmesteProfile from './assets/vmeste-profile.png'
+import vmesteStar from './assets/vmeste-star.png'
 
 export type CaseScreen = {
   src: string
@@ -201,5 +209,43 @@ export const CASES: CaseInfo[] = [
     video: { src: hacksDemo, poster: hacksPoster },
   },
   { slug: 'case-5', title: 'Кейс №5', year: '2024', type: 'Веб-сайт', stockPreview: 'browser' },
-  { slug: 'case-6', title: 'Кейс №6', year: '2023', type: 'Мобильное приложение', stockPreview: 'phone' },
+  {
+    slug: 'vmeste',
+    title: 'Вместе',
+    year: '2024',
+    type: 'Мобильное приложение',
+    description:
+      'Моё первое масштабное приложение — итоговая работа с курсов по направлению «Дизайн» 7bits, IT-LIFT. Нам дали проблему — предприниматель открыл в городе коворкинг, но у него нет посетителей, и никто не знает про мероприятия, которые там проходят, и мы с нуля придумывали концепт приложения, проводили исследования, составляли дизайн-систему. В общем, прошли по полному сценарию создания дизайна продукта, за исключением передачи в разработку. Но об этом мы тоже думали и старались соблюдать гайдлайны и делать все компоненты реализуемыми',
+    timeframe: 'Февраль–апрель 2024',
+    format: 'Учебный проект',
+    screens: [
+      { src: vmesteHome, caption: 'Главная' },
+      { src: vmesteEvent, caption: 'Страница события' },
+      { src: vmesteCreate, caption: 'Создание события' },
+    ],
+    sections: [
+      {
+        text: 'На главной в приложении отображается список событий, рекомендуемых юзеру. События могут быть как в коворкинге, так и где-то в другом месте или вообще в онлайн-формате. По событиям можно проводить поиск с фильтрацией. У события можно просмотреть организаторов, участников, ведущих и спикеров, а также непосредственно зарегистрироваться на это событие',
+        screens: [
+          { src: vmesteHome, caption: 'Рекомендации на главной' },
+          { src: vmesteSearch, caption: 'Поиск с фильтрами' },
+        ],
+      },
+      {
+        text: 'Также можно создавать своё событие и гибко настраивать его под себя. Также можно просто забронировать коворкинг как место для работы, причём можно забронировать как и только на себя, так и на компанию друзей',
+        screens: [
+          { src: vmesteCreate, caption: 'Создание события' },
+          { src: vmesteBooking, caption: 'Бронирование коворкинга' },
+        ],
+      },
+      {
+        text: 'Пользователей можно добавлять в друзья и смотреть, на какие события он идёт, какие он организует. Пользователь также может выставлять информацию о себе: сколько ему лет, где работает и как с ним можно связаться. Это не полноценная социальная сеть, где можно общаться, но в таком приложении, где люди выбирают, на какое событие им пойти, хорошо иметь функцию самопредставления, особенно спикерам и организаторам',
+        screens: [
+          { src: vmesteFriends, caption: 'Список друзей' },
+          { src: vmesteProfile, caption: 'Профиль пользователя' },
+        ],
+      },
+    ],
+    starIcon: vmesteStar,
+  },
 ]
