@@ -44,17 +44,17 @@ function About() {
                 </span>
               </span>
               <span className="line-mask block">
-                <span className="line-reveal inline-flex items-baseline gap-[0.35em] whitespace-nowrap" style={delay(400)}>
+                <span className="line-reveal inline-flex items-baseline gap-[0.35em] whitespace-nowrap" style={delay(550)}>
                   <span>людей чуточку</span>
                   {/* «проще» догоняет с ускорением, звезда — конфетти как в hero */}
                   <span className="line-mask inline-block">
-                    <span className="line-reveal inline-block text-accent" style={delay(850, 450)}>
+                    <span className="line-reveal inline-block text-accent" style={delay(1150, 600)}>
                       проще
                     </span>
                   </span>
                   <Star
                     className="confetti inline-block w-7 self-center text-accent"
-                    style={{ '--fx': '-48px', '--fy': '36px', '--rot': '18deg', '--d': '1250ms' } as CSSProperties}
+                    style={{ '--fx': '-48px', '--fy': '36px', '--rot': '18deg', '--d': '1650ms' } as CSSProperties}
                     aria-hidden="true"
                   />
                 </span>
@@ -96,9 +96,10 @@ function About() {
         </div>
 
         <div className="relative hidden md:block">
-          <Star className="absolute left-2 top-10 w-8 -rotate-12 text-accent" aria-hidden="true" />
+          {/* Пара звёзд справа: крупная чуть выше и левее мелкой */}
+          <Star className="absolute right-12 top-24 w-8 -rotate-12 text-accent" aria-hidden="true" />
           <Star className="absolute -right-2 top-40 w-5 rotate-12 text-accent" aria-hidden="true" />
-          {/* Низ фото уходит под ленту «cases» */}
+          {/* Низ фото уходит под ленту «about me» */}
           <img
             src={portrait}
             alt="Людмила Сафронова"
@@ -107,15 +108,15 @@ function About() {
         </div>
       </div>
 
-      {/* Лента cases во весь экран, обрезает фото снизу */}
-      <div className="relative z-10 -mx-10 -mt-14 -rotate-2">
+      {/* Лента about me во весь экран, обрезает фото снизу */}
+      <div className="relative z-10 -mx-10 -mt-14 -rotate-1">
         <div className="overflow-hidden bg-accent py-3">
           <div className="marquee font-display text-2xl font-semibold text-bg" aria-hidden="true">
             {Array.from({ length: 2 }).map((_, half) => (
               <span key={half} className="flex shrink-0">
                 {Array.from({ length: 10 }).map((_, i) => (
                   <span key={i} className="mx-6 flex items-center gap-12">
-                    cases
+                    about me
                     <Star className="w-5" />
                   </span>
                 ))}
