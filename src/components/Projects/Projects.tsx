@@ -1,8 +1,9 @@
 import type { MouseEvent } from 'react'
 import Star from '../Star'
 import PhoneMockup from '../PhoneMockup'
+import BrowserMockup from '../BrowserMockup'
 import { CASES } from '../../cases'
-import type { CaseInfo, CaseScreen } from '../../cases'
+import type { CaseInfo, CaseScreen, CaseWebScreens } from '../../cases'
 import { fly } from '../../confetti'
 import { href, navigate } from '../../router'
 
@@ -95,6 +96,38 @@ function FanPreview({ screens, icons = [] }: { screens: CaseScreen[]; icons?: st
   )
 }
 
+/* Превью веб-кейса: скрин сайта в браузере посередине, мобильные экраны
+   по бокам; при наведении композиция раздвигается, а из-под плашки вылетают
+   только стандартные фиолетовые звёздочки — без иконок проекта */
+function WebFanPreview({ web }: { web: CaseWebScreens }) {
+  const [left, right] = web.phones
+  return (
+    <>
+      <PhoneMockup
+        src={left.src}
+        className={`absolute left-[8%] top-14 w-[88px] origin-bottom -rotate-[8deg] ${spring} group-hover:-translate-x-4 group-hover:-translate-y-3 group-hover:-rotate-[14deg]`}
+      />
+      <PhoneMockup
+        src={right.src}
+        className={`absolute right-[8%] top-14 w-[88px] origin-bottom rotate-[8deg] ${spring} group-hover:translate-x-4 group-hover:-translate-y-3 group-hover:rotate-[14deg]`}
+      />
+      <BrowserMockup
+        src={web.site.src}
+        className={`absolute left-1/2 top-9 z-10 w-[56%] -translate-x-1/2 ${spring} group-hover:-translate-y-7`}
+      />
+      {/* Звёздочки видны только при наведении (см. .case-card в index.css) */}
+      <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+        <Star className="confetti absolute left-[4%] -top-6 w-3 text-accent" style={fly(44, 170, 18, 60)} />
+        <Star className="confetti absolute right-[3%] -top-8 w-4 text-accent" style={fly(-52, 186, -14, 150)} />
+        <Star className="confetti absolute -left-7 top-[42%] w-3 text-accent" style={fly(48, 104, 22, 250)} />
+        <Star className="confetti absolute -right-8 top-[30%] w-2.5 text-accent" style={fly(-46, 118, 16, 330)} />
+        <Star className="confetti absolute left-[38%] -top-9 w-3.5 text-accent" style={fly(20, 200, -20, 190)} />
+        <Star className="confetti absolute left-[58%] -top-5 w-2.5 text-accent" style={fly(-16, 188, 24, 380)} />
+      </div>
+    </>
+  )
+}
+
 const goTo = (slug: string) => (e: MouseEvent<HTMLAnchorElement>) => {
   // модификаторы и не-левую кнопку отдаём браузеру (новая вкладка и т.п.)
   if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
@@ -116,10 +149,12 @@ function Projects() {
               className="case-card group relative block rounded-2xl border border-line bg-elevated shadow-(--shadow-card) transition-all duration-300 ease-out hover:z-20 hover:-translate-y-2 hover:shadow-(--shadow-hover)"
             >
               <div
-                className={`relative h-44 rounded-t-2xl bg-bg ${item.screens ? 'fan-clip' : 'overflow-hidden'}`}
+                className={`relative h-44 rounded-t-2xl bg-bg ${item.screens || item.webScreens ? 'fan-clip' : 'overflow-hidden'}`}
               >
                 {item.screens ? (
                   <FanPreview screens={item.screens} icons={item.hoverIcons} />
+                ) : item.webScreens ? (
+                  <WebFanPreview web={item.webScreens} />
                 ) : (
                   <StockPreview kind={item.stockPreview ?? 'browser'} />
                 )}

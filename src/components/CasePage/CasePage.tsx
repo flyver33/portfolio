@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import type { MouseEvent } from 'react'
 import PhoneMockup from '../PhoneMockup'
-import type { CaseInfo, CaseSection } from '../../cases'
+import MonitorMockup from '../MonitorMockup'
+import type { CaseInfo, CaseSection, CaseWebScreens } from '../../cases'
 import { href, navigate } from '../../router'
 import { typo } from '../../typography'
 
@@ -78,6 +79,38 @@ function SectionScreens({ section }: { section: CaseSection }) {
         alt={`Экран «${back.caption}»`}
         className="mt-12 -ml-10 w-[46%] max-w-[240px] rotate-2 transition-transform duration-300 hover:z-20 hover:-translate-y-3"
       />
+    </div>
+  )
+}
+
+/* Витрина веб-кейса: монитор со скрином сайта, смещённый влево от центра,
+   и мобильные экраны по бокам на разной высоте — композиция нарочно
+   асимметричная. На узких экранах телефоны встают рядом под монитором */
+function WebShowcase({ web }: { web: CaseWebScreens }) {
+  const [left, right] = web.phones
+  return (
+    <div className="relative mt-24">
+      <MonitorMockup
+        src={web.site.src}
+        alt={`Скрин сайта — ${web.site.caption.toLowerCase()}`}
+        className="sm:ml-[3%] sm:w-[74%]"
+      />
+      {/* sm:contents убирает обёртку из раскладки — телефоны позиционируются
+          от общего relative-контейнера */}
+      <div className="mt-10 flex items-start justify-center gap-6 sm:contents">
+        <PhoneMockup
+          notch
+          src={left.src}
+          alt={`Мобильный экран «${left.caption}»`}
+          className="w-[42%] max-w-[200px] -rotate-[5deg] transition-transform duration-300 hover:-translate-y-3 sm:absolute sm:bottom-[-6%] sm:left-[3%] sm:w-[17%]"
+        />
+        <PhoneMockup
+          notch
+          src={right.src}
+          alt={`Мобильный экран «${right.caption}»`}
+          className="mt-10 w-[42%] max-w-[200px] rotate-[4deg] transition-transform duration-300 hover:-translate-y-3 sm:absolute sm:right-[1%] sm:top-[12%] sm:mt-0 sm:w-[19%]"
+        />
+      </div>
     </div>
   )
 }
@@ -171,6 +204,8 @@ function CasePage({ info }: { info: CaseInfo }) {
               </section>
             ))}
           </div>
+        ) : info.webScreens ? (
+          <WebShowcase web={info.webScreens} />
         ) : (
           /* TODO: контент кейса (описание, экраны, ссылка) автор приведёт позже */
           <p className="mt-20 max-w-xl text-[17px] leading-[1.32] text-fog">

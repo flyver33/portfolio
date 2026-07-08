@@ -22,6 +22,9 @@ import effectiveViews2 from './assets/effective-views-2.png'
 import effectiveHome1 from './assets/effective-home-1.png'
 import effectiveHome2 from './assets/effective-home-2.png'
 import effectiveStar from './assets/effective-star.svg'
+import kipSite from './assets/kip-site.png'
+import kipPartner from './assets/kip-phone-partner.png'
+import kipTariffs from './assets/kip-phone-tariffs.png'
 
 export type CaseScreen = {
   src: string
@@ -32,6 +35,12 @@ export type CaseScreen = {
 export type CaseSection = {
   text: string
   screens: [CaseScreen, CaseScreen]
+}
+
+/** Экраны веб-кейса: скрин сайта в центре и два мобильных экрана по бокам */
+export type CaseWebScreens = {
+  site: CaseScreen
+  phones: [CaseScreen, CaseScreen]
 }
 
 export type CaseInfo = {
@@ -47,6 +56,8 @@ export type CaseInfo = {
   format?: string
   /** Экраны для веера карточки в сетке кейсов */
   screens?: CaseScreen[]
+  /** Веб-кейс: сайт + мобильные экраны — и для карточки, и для витрины страницы */
+  webScreens?: CaseWebScreens
   /** Блоки страницы кейса: экраны и текст чередуются по сторонам */
   sections?: CaseSection[]
   /** Иконки проекта, выскакивающие из-под плашки карточки при наведении */
@@ -149,7 +160,24 @@ export const CASES: CaseInfo[] = [
     ],
     hoverIcons: [effectiveStar],
   },
-  { slug: 'case-3', title: 'Кейс №3', year: '2024', type: 'Веб-сайт', stockPreview: 'duo' },
+  {
+    slug: 'kip',
+    title: 'Кузнецов и Партнеры',
+    year: '2026',
+    type: 'Веб-сайт',
+    description:
+      'Небольшой редизайн сайта для финансовой фирмы. Определили вместе с заказчиком стиль, настроение и цель сайта и обновили сайт, чтобы он привлекал больше новых клиентов',
+    timeframe: 'Апрель 2026 – н.в.',
+    format: 'Заказная разработка',
+    webScreens: {
+      site: { src: kipSite, caption: 'Главная страница' },
+      phones: [
+        { src: kipPartner, caption: 'Управляющий партнёр' },
+        { src: kipTariffs, caption: 'Тарифы' },
+      ],
+    },
+    link: { label: 'Перейти на сайт', href: 'https://kipfinance.ru/' },
+  },
   { slug: 'case-4', title: 'Кейс №4', year: '2024', type: 'Мобильное приложение', stockPreview: 'duo' },
   { slug: 'case-5', title: 'Кейс №5', year: '2024', type: 'Веб-сайт', stockPreview: 'browser' },
   { slug: 'case-6', title: 'Кейс №6', year: '2023', type: 'Мобильное приложение', stockPreview: 'phone' },
