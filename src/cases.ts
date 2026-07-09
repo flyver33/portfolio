@@ -236,7 +236,7 @@ export const CASES: CaseInfo[] = [
       { src: devfestPost2, caption: 'Пост' },
       { src: devfestPost3, caption: 'Пост' },
     ],
-    hoverIcons: [devfestSwirl, devfestChirp],
+    hoverIcons: [devfestSwirl, devfestChirp, devfestSwirl],
     gallery: [
       { src: devfestPost1, caption: 'Пост' },
       { src: devfestBanner, caption: 'Баннер' },
