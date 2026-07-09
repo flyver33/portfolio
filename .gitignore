@@ -28,3 +28,7 @@ dist-ssr
 
 # playwright-cli session artifacts
 .playwright-cli
+
+# local test/scratch artifacts (скриншоты, снапшоты, голдены, одноразовые скрипты)
+# — держать здесь, не в корне репозитория
+.scratch/
