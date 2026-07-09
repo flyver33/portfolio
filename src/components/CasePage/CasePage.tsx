@@ -275,7 +275,7 @@ function CasePage({ info }: { info: CaseInfo }) {
       {/* Свечение как в hero, но по бокам первого экрана */}
       <div className="side-glow pointer-events-none absolute inset-x-0 top-0 h-screen" aria-hidden="true" />
       <header className="sticky top-0 z-40 border-b border-line/60 bg-bg">
-        <div className="mx-auto flex max-w-6xl items-center gap-5 px-6 py-4">
+        <div className="mx-auto flex max-w-6xl items-center gap-3 px-6 py-4 sm:gap-5">
           <a
             href={href('')}
             onClick={goHome}
@@ -292,7 +292,7 @@ function CasePage({ info }: { info: CaseInfo }) {
               href={info.link.href}
               target="_blank"
               rel="noreferrer"
-              className="ml-auto shrink-0 rounded-lg bg-accent px-5 py-2.5 text-[15px] font-semibold text-bg transition-colors duration-150 hover:bg-accent-hover active:bg-accent-press"
+              className="ml-auto shrink-0 rounded-lg bg-accent px-4 py-2 text-[15px] font-semibold text-bg transition-colors duration-150 hover:bg-accent-hover active:bg-accent-press sm:px-5 sm:py-2.5"
             >
               {info.link.label}
             </a>

@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Веер карточки кейса раскрывается при наведении ИЛИ когда карточка «активна»
+   (верхняя в фокусе на тач-устройствах, класс .is-active ставит useActiveCard).
+   Единый вариант вместо дублирования каждой трансформации под hover и active. */
+@custom-variant fan-open {
+  :is(.group:hover, .group.is-active) & {
+    @slot;
+  }
+}
+
 /* Токены из .claude/memory/design-system.md */
 @theme {
   --font-sans: "Golos Text", system-ui, sans-serif;

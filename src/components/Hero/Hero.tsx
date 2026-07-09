@@ -119,6 +119,25 @@ function Hero() {
             UX/UI-дизайнер<sup>*</sup>
           </p>
         </div>
+
+        {/* На мобильном ховера нет — показываем пару полароидов статично,
+            чтобы заполнить hero и вернуть личную интонацию */}
+        <div className={`${rise} mt-11 md:hidden`} style={delay(320)}>
+          <div className="relative mx-auto flex w-fit items-start justify-center gap-3">
+            <img
+              src={photoRoad}
+              alt=""
+              className="w-32 -rotate-3 rounded-2xl shadow-(--shadow-card)"
+            />
+            <img
+              src={photoDiploma}
+              alt=""
+              className="mt-7 w-28 rotate-3 rounded-2xl shadow-(--shadow-card)"
+            />
+            <Star className="absolute -right-3 -top-4 w-6 rotate-12 text-accent" aria-hidden="true" />
+          </div>
+          <p className="mt-5 text-sm text-fog">{typo('Активно ищу работу!')}</p>
+        </div>
       </div>
 
       <p
