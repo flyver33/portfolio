@@ -90,7 +90,7 @@ function About() {
               className="rise mt-12 inline-block rounded-lg bg-accent px-6 py-3 text-[15px] font-semibold text-bg transition-colors duration-150 hover:bg-accent-hover active:bg-accent-press"
               style={delay(430)}
             >
-              Смотреть портфолио
+              Смотреть резюме
             </a>
           </div>
         </div>
