@@ -144,28 +144,32 @@ function FanPreview({
    вылетают иконки проекта (завитушка, чпунька) и фиолетовые звёздочки */
 function PostFanPreview({ posts, icons = [] }: { posts: CaseScreen[]; icons?: string[] }) {
   const [first, second, third] = posts
+  /* Крупные квадратные посты; низ уходит под плашку (обрезка .fan-clip) */
   const tile =
-    'aspect-square w-[104px] rounded-xl border border-line object-cover shadow-(--shadow-card)'
+    'aspect-square w-[148px] rounded-xl border border-line object-cover shadow-(--shadow-card)'
+  /* Завитушка (повёрнута ~30°), чпунька (на 180°) и вторая завитушка
+     покрупнее снизу слева с исходным углом (~-12°) */
   const iconSpots = [
-    { pos: 'left-[3%] -top-9 w-10', vec: fly(58, 185, -12, 40) },
-    { pos: '-right-9 top-[46%] w-6', vec: fly(-60, 96, 10, 200) },
+    { pos: 'left-[1%] -top-9 w-10', vec: fly(58, 185, 30, 40) },
+    { pos: '-right-9 top-[42%] w-6', vec: fly(-60, 96, 180, 200) },
+    { pos: '-left-11 top-[54%] w-16', vec: fly(70, 44, -12, 300) },
   ]
   return (
     <>
       <img
         src={first.src}
         alt=""
-        className={`absolute left-1/2 top-8 origin-bottom -translate-x-[calc(50%+30px)] translate-y-1.5 -rotate-[7deg] ${tile} ${spring} fan-open:-translate-x-[calc(50%+74px)] fan-open:-translate-y-4 fan-open:-rotate-[15deg]`}
+        className={`absolute left-1/2 top-11 origin-bottom -translate-x-[calc(50%+38px)] translate-y-1.5 -rotate-[7deg] ${tile} ${spring} fan-open:-translate-x-[calc(50%+92px)] fan-open:-translate-y-4 fan-open:-rotate-[15deg]`}
       />
       <img
         src={third.src}
         alt=""
-        className={`absolute left-1/2 top-8 origin-bottom translate-x-[calc(-50%+30px)] translate-y-1.5 rotate-[7deg] ${tile} ${spring} fan-open:translate-x-[calc(-50%+74px)] fan-open:-translate-y-4 fan-open:rotate-[15deg]`}
+        className={`absolute left-1/2 top-11 origin-bottom translate-x-[calc(-50%+38px)] translate-y-1.5 rotate-[7deg] ${tile} ${spring} fan-open:translate-x-[calc(-50%+92px)] fan-open:-translate-y-4 fan-open:rotate-[15deg]`}
       />
       <img
         src={second.src}
         alt=""
-        className={`absolute left-1/2 top-8 z-10 origin-bottom -translate-x-1/2 ${tile} ${spring} fan-open:-translate-y-10`}
+        className={`absolute left-1/2 top-11 z-10 origin-bottom -translate-x-1/2 ${tile} ${spring} fan-open:-translate-y-12`}
       />
       {/* Иконки и звёздочки видны только при наведении (см. .case-card в index.css) */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
@@ -206,7 +210,7 @@ function WebFanPreview({ web }: { web: CaseWebScreens }) {
       />
       <BrowserMockup
         src={web.site.src}
-        className={`absolute left-1/2 top-9 z-10 w-[56%] -translate-x-1/2 ${spring} fan-open:-translate-y-7`}
+        className={`absolute left-1/2 top-[72px] z-10 w-[56%] -translate-x-1/2 ${spring} fan-open:-translate-y-7`}
       />
       {/* Звёздочки видны только при наведении (см. .case-card в index.css) */}
       <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
