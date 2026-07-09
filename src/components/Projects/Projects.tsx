@@ -138,6 +138,56 @@ function FanPreview({
   )
 }
 
+/* Веер из трёх картинок-постов (без мокапа телефона); ведёт себя как
+   FanPreview — при наведении раскрывается и приподнимается, из-под плашки
+   вылетают иконки проекта (завитушка, чпунька) и фиолетовые звёздочки */
+function PostFanPreview({ posts, icons = [] }: { posts: CaseScreen[]; icons?: string[] }) {
+  const [first, second, third] = posts
+  const tile =
+    'aspect-square w-[104px] rounded-xl border border-line object-cover shadow-(--shadow-card)'
+  const iconSpots = [
+    { pos: 'left-[3%] -top-9 w-10', vec: fly(58, 185, -12, 40) },
+    { pos: '-right-9 top-[46%] w-6', vec: fly(-60, 96, 10, 200) },
+  ]
+  return (
+    <>
+      <img
+        src={first.src}
+        alt=""
+        className={`absolute left-1/2 top-8 origin-bottom -translate-x-[calc(50%+30px)] translate-y-1.5 -rotate-[7deg] ${tile} ${spring} group-hover:-translate-x-[calc(50%+74px)] group-hover:-translate-y-4 group-hover:-rotate-[15deg]`}
+      />
+      <img
+        src={third.src}
+        alt=""
+        className={`absolute left-1/2 top-8 origin-bottom translate-x-[calc(-50%+30px)] translate-y-1.5 rotate-[7deg] ${tile} ${spring} group-hover:translate-x-[calc(-50%+74px)] group-hover:-translate-y-4 group-hover:rotate-[15deg]`}
+      />
+      <img
+        src={second.src}
+        alt=""
+        className={`absolute left-1/2 top-8 z-10 origin-bottom -translate-x-1/2 ${tile} ${spring} group-hover:-translate-y-10`}
+      />
+      {/* Иконки и звёздочки видны только при наведении (см. .case-card в index.css) */}
+      <div className="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+        {icons.map((icon, i) => (
+          <img
+            key={`${icon}-${i}`}
+            src={icon}
+            alt=""
+            className={`confetti confetti-soft absolute ${iconSpots[i % iconSpots.length].pos}`}
+            style={iconSpots[i % iconSpots.length].vec}
+          />
+        ))}
+        <Star className="confetti absolute left-[2%] top-[1%] w-2.5 text-accent" style={fly(40, 150, 20, 210)} />
+        <Star className="confetti absolute right-[1%] -top-4 w-4 text-accent" style={fly(-58, 182, -16, 60)} />
+        <Star className="confetti absolute -left-8 top-[36%] w-3 text-accent" style={fly(46, 110, 24, 300)} />
+        <Star className="confetti absolute -right-9 top-[22%] w-2.5 text-accent" style={fly(-52, 126, 18, 370)} />
+        <Star className="confetti absolute left-[42%] -top-10 w-4 text-accent" style={fly(22, 208, 16, 190)} />
+        <Star className="confetti absolute left-[56%] -top-7 w-2.5 text-accent" style={fly(-18, 196, -22, 350)} />
+      </div>
+    </>
+  )
+}
+
 /* Превью веб-кейса: скрин сайта в браузере посередине, мобильные экраны
    по бокам; при наведении композиция раздвигается, а из-под плашки вылетают
    только стандартные фиолетовые звёздочки — без иконок проекта */
@@ -218,10 +268,12 @@ function Projects() {
               className="case-card group relative block rounded-2xl border border-line bg-elevated shadow-(--shadow-card) transition-all duration-300 ease-out hover:z-20 hover:-translate-y-2 hover:shadow-(--shadow-hover)"
             >
               <div
-                className={`relative h-44 rounded-t-2xl bg-bg ${item.screens || item.webScreens || item.cardScreen ? 'fan-clip' : 'overflow-hidden'}`}
+                className={`relative h-44 rounded-t-2xl bg-bg ${item.screens || item.posts || item.webScreens || item.cardScreen ? 'fan-clip' : 'overflow-hidden'}`}
               >
                 {item.screens ? (
                   <FanPreview screens={item.screens} icons={item.hoverIcons} starIcon={item.starIcon} />
+                ) : item.posts ? (
+                  <PostFanPreview posts={item.posts} icons={item.hoverIcons} />
                 ) : item.webScreens ? (
                   <WebFanPreview web={item.webScreens} />
                 ) : item.cardScreen ? (

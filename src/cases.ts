@@ -36,6 +36,16 @@ import vmesteBooking from './assets/vmeste-booking.png'
 import vmesteFriends from './assets/vmeste-friends.png'
 import vmesteProfile from './assets/vmeste-profile.png'
 import vmesteStar from './assets/vmeste-star.png'
+import devfestPost1 from './assets/devfest-post-1.jpg'
+import devfestPost2 from './assets/devfest-post-2.jpg'
+import devfestPost3 from './assets/devfest-post-3.jpg'
+import devfestPost4 from './assets/devfest-post-4.jpg'
+import devfestPost5 from './assets/devfest-post-5.jpg'
+import devfestBanner from './assets/devfest-banner.jpg'
+import devfestStickers from './assets/devfest-stickers.jpg'
+import devfestPresswall from './assets/devfest-presswall.jpg'
+import devfestSwirl from './assets/devfest-swirl.svg'
+import devfestChirp from './assets/devfest-chirp.svg'
 
 export type CaseScreen = {
   src: string
@@ -58,7 +68,7 @@ export type CaseInfo = {
   slug: string
   title: string
   year: string
-  type: 'Веб-сайт' | 'Мобильное приложение'
+  type: 'Веб-сайт' | 'Мобильное приложение' | 'Разное'
   /** Краткое описание для страницы кейса; абзацы разделяются \n\n */
   description?: string
   /** Период работы — чип с календарём на странице кейса */
@@ -67,6 +77,10 @@ export type CaseInfo = {
   format?: string
   /** Экраны для веера карточки в сетке кейсов */
   screens?: CaseScreen[]
+  /** Веер карточки из картинок-постов (без мокапа телефона) */
+  posts?: CaseScreen[]
+  /** Галерея-карусель на странице кейса: посты и фотографии подряд */
+  gallery?: CaseScreen[]
   /** Веб-кейс: сайт + мобильные экраны — и для карточки, и для витрины страницы */
   webScreens?: CaseWebScreens
   /** Веб-кейс с одним экраном: скрин сайта в браузере для карточки */
@@ -208,7 +222,33 @@ export const CASES: CaseInfo[] = [
     cardScreen: { src: hacksSite, caption: 'Сайт хакатона' },
     video: { src: hacksDemo, poster: hacksPoster },
   },
-  { slug: 'case-5', title: 'Кейс №5', year: '2024', type: 'Веб-сайт', stockPreview: 'browser' },
+  {
+    slug: 'devfest',
+    title: 'ДевФест',
+    year: '2025–2026',
+    type: 'Разное',
+    description:
+      'Основными моими задачами на этот сезон ДевФеста были поддержка сайта и создание картинок к постам, но также я потом создавала печатные материалы: наклейки, баннеры, пресс-воллы, указатели, рекламные распечатки и прочее. К сожалению, веб-сайт не сохранился и я не могу вытащить его внешний вид с web archive, но все посты можно посмотреть в тг канале, а рекламные материалы можно было увидеть весной 2026 на улицах города',
+    timeframe: 'Октябрь 2025 – Май 2026',
+    format: 'ДевФест',
+    posts: [
+      { src: devfestPost1, caption: 'Пост' },
+      { src: devfestPost2, caption: 'Пост' },
+      { src: devfestPost3, caption: 'Пост' },
+    ],
+    hoverIcons: [devfestSwirl, devfestChirp],
+    gallery: [
+      { src: devfestPost1, caption: 'Пост' },
+      { src: devfestBanner, caption: 'Баннер' },
+      { src: devfestPost2, caption: 'Пост' },
+      { src: devfestStickers, caption: 'Наклейки' },
+      { src: devfestPost3, caption: 'Пост' },
+      { src: devfestPresswall, caption: 'Пресс-волл' },
+      { src: devfestPost4, caption: 'Пост' },
+      { src: devfestPost5, caption: 'Пост' },
+    ],
+    link: { label: 'Telegram канал', href: 'https://t.me/devfest_official' },
+  },
   {
     slug: 'vmeste',
     title: 'Вместе',

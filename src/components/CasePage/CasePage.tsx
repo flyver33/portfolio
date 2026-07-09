@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import type { MouseEvent, RefObject } from 'react'
 import PhoneMockup from '../PhoneMockup'
 import MonitorMockup from '../MonitorMockup'
-import type { CaseInfo, CaseSection, CaseWebScreens } from '../../cases'
+import type { CaseInfo, CaseScreen, CaseSection, CaseWebScreens } from '../../cases'
 import { href, navigate } from '../../router'
 import { typo } from '../../typography'
 
@@ -149,6 +149,76 @@ function VideoShowcase({
   )
 }
 
+const ChevronIcon = ({ dir }: { dir: 'left' | 'right' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    className="w-5"
+  >
+    <path d={dir === 'left' ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7'} />
+  </svg>
+)
+
+/* Карусель-галерея: посты и фотографии материалов лентой с горизонтальной
+   прокруткой. Высота карточек одинаковая, ширина — по пропорции картинки,
+   поэтому квадратные посты и вытянутые фото соседствуют естественно.
+   Стрелки прокручивают на ширину видимой области; по краям — мягкое
+   затухание. Подписей нет (alt — только для доступности) */
+function Gallery({ items }: { items: CaseScreen[] }) {
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  const scrollByView = (sign: 1 | -1) => {
+    const track = trackRef.current
+    if (!track) return
+    track.scrollBy({ left: sign * track.clientWidth * 0.8, behavior: 'smooth' })
+  }
+
+  return (
+    <div className="relative mt-16">
+      <div
+        ref={trackRef}
+        role="group"
+        aria-label="Галерея материалов, прокручивается стрелками ниже"
+        tabIndex={0}
+        className="flex gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+      >
+        {items.map((item, i) => (
+          <img
+            key={`${item.src}-${i}`}
+            src={item.src}
+            alt={item.caption}
+            loading="lazy"
+            className="h-[280px] w-auto shrink-0 rounded-2xl border border-line object-cover shadow-(--shadow-card) sm:h-[440px]"
+          />
+        ))}
+      </div>
+      <div className="mt-6 flex justify-end gap-3">
+        <button
+          type="button"
+          onClick={() => scrollByView(-1)}
+          aria-label="Пролистать назад"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-elevated text-fog transition-colors duration-150 hover:border-accent/40 hover:text-white"
+        >
+          <ChevronIcon dir="left" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollByView(1)}
+          aria-label="Пролистать вперёд"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-elevated text-fog transition-colors duration-150 hover:border-accent/40 hover:text-white"
+        >
+          <ChevronIcon dir="right" />
+        </button>
+      </div>
+    </div>
+  )
+}
+
 /* Таймкоды вида «0:32» в тексте описания становятся кнопками-перемотками
    видео ниже. split с захватом: нечётные индексы — сами таймкоды */
 const TIMECODE = /(\d+:\d{2})/g
@@ -283,6 +353,8 @@ function CasePage({ info }: { info: CaseInfo }) {
           <WebShowcase web={info.webScreens} />
         ) : info.video ? (
           <VideoShowcase video={info.video} videoRef={videoRef} />
+        ) : info.gallery ? (
+          <Gallery items={info.gallery} />
         ) : (
           /* TODO: контент кейса (описание, экраны, ссылка) автор приведёт позже */
           <p className="mt-20 max-w-xl text-[17px] leading-[1.32] text-fog">
