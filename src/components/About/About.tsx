@@ -44,7 +44,7 @@ function About() {
                 </span>
               </span>
               <span className="line-mask block">
-                <span className="line-reveal inline-flex items-baseline gap-[0.35em] whitespace-nowrap" style={delay(550)}>
+                <span className="line-reveal inline-flex flex-wrap items-baseline gap-[0.35em] whitespace-nowrap md:flex-nowrap" style={delay(550)}>
                   <span>людей чуточку</span>
                   {/* «проще» догоняет с ускорением, звезда — конфетти как в hero */}
                   <span className="line-mask inline-block">
