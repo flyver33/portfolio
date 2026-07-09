@@ -1,0 +1,43 @@
+name: PR Preview
+
+# Собирает превью каждого PR и кладёт в ветку gh-pages в подпапку
+# pr-preview/pr-<N>/. Доступно на
+#   https://flyver33.github.io/portfolio/pr-preview/pr-<N>/
+# Обновляется на новые коммиты PR, удаляется при закрытии PR.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        if: github.event.action != 'closed'
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+        if: github.event.action != 'closed'
+
+      - name: Build with preview base
+        if: github.event.action != 'closed'
+        env:
+          VITE_BASE: /portfolio/pr-preview/pr-${{ github.event.number }}/
+        run: npm run build
+
+      - uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./dist
+          umbrella-dir: pr-preview
