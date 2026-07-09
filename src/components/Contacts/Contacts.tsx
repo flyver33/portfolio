@@ -24,12 +24,14 @@ const icons = {
   ),
 }
 
-/* TODO: подставить реальные адреса (Telegram, почта, Max, LinkedIn) */
 const CONTACTS = [
-  { label: 'Telegram', value: '@username', href: 'https://t.me/username', icon: icons.telegram },
-  { label: 'Почта', value: 'hello@example.com', href: 'mailto:hello@example.com', icon: icons.mail },
+  { label: 'Telegram', value: '@flyver33', href: 'https://t.me/flyver33', icon: icons.telegram },
+  { label: 'Почта', value: 'flyver33@gmail.com', href: 'mailto:flyver33@gmail.com', icon: icons.mail },
+  /* Max скрыт: публичной ссылки нет, только номер телефона — не светим.
+     Вернуть, когда появится публичный профиль:
   { label: 'Max', value: '@username', href: 'https://max.ru/username', icon: icons.max },
-  { label: 'LinkedIn', value: 'linkedin.com/in/username', href: 'https://linkedin.com/in/username', icon: icons.linkedin },
+  */
+  { label: 'LinkedIn', value: 'linkedin.com/in/flyver33', href: 'https://www.linkedin.com/in/flyver33/', icon: icons.linkedin },
 ]
 
 function Contacts() {
